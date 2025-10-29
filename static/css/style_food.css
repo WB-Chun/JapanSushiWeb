@@ -1,0 +1,204 @@
+
+
+
+.navbar-expand-lg{
+    position: fixed;
+    width: 100%;
+    z-index: 1000;          /* 確保導航欄層級足夠高，避免被其他元素覆蓋 */
+    margin-top: -100px;
+}
+.logo-small{
+    margin-left: auto; 
+    margin-right: auto;
+    width: 100px;
+}
+.logo-big{
+    height: 90px; 
+    width: auto; 
+    z-index: 1; 
+}
+.title-storename{
+    font-size: 20px;
+    font-weight: bold;
+    font-family:"標楷體";
+}
+
+.navbar-brand {
+    font-size: 36px;
+    font-weight: bold;
+}
+.navbar-nav {
+    font-size: 20px;
+    font-weight: bold;
+    font-family:"標楷體";
+}
+.nav-item {
+    margin-right: 10px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+.nav-link:hover {
+    transform: translateY(5px); /* 下移5像素動畫 */
+    transition: transform 0.5s ease;
+} 
+.nav-news{
+    position: relative;
+}
+.nav-news-img{
+    width: 50px; 
+    position:absolute; 
+    z-index: 0; 
+    top: 0px; 
+    left: -15px;
+}
+.nav-login{
+    width: 25px;
+    height: 35px;
+}
+
+/*------------------------------------------------------------------------------------------*/
+ /*會員登入*/
+ .modal-content-login {
+    min-height: 50vh;
+    max-height: 50vh;
+}
+
+.modal-body-login{
+    margin-top: 30px;
+    width: 100%;
+    height: 40px;
+    border: 1px solid var(--color-secondary);
+    border-radius: 8px;
+    padding: 0 8px;
+    
+}
+.login-input {
+    width: 80%;
+    height: 40px;
+    padding: 0 16px;
+    border: 1px solid var(--color-secondary);
+    border-radius: 8px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
+}
+.btn-login {
+    width: 80%;
+    height: 40px;
+    padding: 0 16px;
+    border: 1px solid var(--color-secondary);
+    border-radius: 8px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
+    background: var(--color-primary);
+    color: var(--color-white);
+}
+/*會員登入 end*/
+
+.main{
+    margin-top: 100px
+}
+
+
+
+.bg-img::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.6); /* 白色半透明疊加層，透明度 50% */
+    z-index: 1; /* 疊加層在背景上方 */
+}
+
+
+.title{
+    text-align: center;
+    max-width: 180px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 30px;
+}
+
+.swiper-img {
+    width: 100%;
+    height: 100%;
+}
+
+.swiper-slide img {
+    width: 100%; /* 圖片寬度隨容器調整 */
+    height: 100%; /* 高度根據容器調整 */
+    object-fit: cover; /* 確保圖片縮放以適應容器，保持比例並充滿容器 */
+}
+
+.swiper-info{
+    width: 100%;
+    height: 100%; 
+}
+.swiper-info h2{
+    text-align: center;
+    font-weight: bold;
+    margin-top: 30px;
+    margin-bottom: 50px;
+}
+.swiper-info li{
+    margin-bottom: 15px;
+    margin-left: 50px;
+}
+
+.swiper-slide {
+  border-radius: 18px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #000000;
+  
+}
+
+.bg-1  {
+  background-color: rgb(252, 215, 166);
+  font-family:"Comic Sans MS","Noto Sans TC","標楷體";
+
+}
+.bg-2  {
+  background-color: rgb(255, 198, 146);
+  font-family:"Comic Sans MS","Noto Sans TC","標楷體";
+}
+
+.swiper{
+--swiper-theme-color: #ff0800;          /* 配置Swiper風格 */
+--swiper-navigation-color: #ff0800;     /* 單獨的設定安排 */
+--swiper-navigation-size: 30px;             /* 設定按鈕大小 */
+}
+
+.mySwiper-l {
+    width: 100%;
+    height: 1000px;
+    margin-top: -100px;
+}
+
+.change-slide {
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.footer {
+background-color: #333;
+color: white;
+font-family:"Comic Sans MS","Noto Sans TC","標楷體";
+width: 100%; 
+padding: 30px;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+.footer p{
+    margin-left: 20px;
+}
+.footer img{
+    height: 70px;
+}

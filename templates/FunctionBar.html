@@ -1,0 +1,143 @@
+{% load static %}
+
+<div>
+    <div>
+        <nav class="navbar navbar-expand-lg navbar-toggler bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand d-lg-none logo-small" href="/home/">
+                    <img src="{% static '/home/other/logo2.jpg' %}" style="width: 150px;">
+                </a>
+                <a class="navbar-brand d-none d-lg-block logo-big" href="/home/">
+                    <img src="{% static '/home/other/logo.png' %}" style="width: 200px;">
+                </a>
+                <a class="navbar-brand d-none d-lg-block title-storename" href="/home/">暮秋の日本料理</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item nav-link nav-news">
+                            <img src="{% static '/home/other/news.jpg' %}" class="nav-news-img">
+                            <a class="nav-link" href="/home/#news-page">最新活動</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/food/" id="jp_menu">暮秋珍饈</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/order/">外帶點餐</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/reserve/">線上訂位</a>
+                        </li>
+                        {% if request.user.is_authenticated and request.user.is_active %}
+                        <li class="nav-item" style="color:blue;">
+                            <a>您好! {{ request.user.username }}&nbsp;🍜</a>
+                            <a href="/logout/" style="text-decoration: none;">登出</a><br>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="memberAreaDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                會員專區
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="memberAreaDropdown">
+                                <li><a class="dropdown-item" href="/checkout/detial/">您的訂單</a></li>
+                                <li><a class="dropdown-item" href="/reserve/detial/">您的訂位</a></li>
+                                <li><a class="dropdown-item" href="/userupdate/">修改會員資料</a></li>
+                            </ul>
+                        </li>
+                        {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                會員登入             
+                                <img src="{% static '/home/other/login.png' %}" class="nav-login">
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content modal-content-login">
+            <div class="modal-header d-flex flex-column align-items-center gap-3">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h3 class="modal-title" id="exampleModalLabel" style="font-weight: bold;">會員</h3>
+            </div>
+            <div class="modal-body modal-body-login">
+                <form id="loginForm">
+                    {% csrf_token %}
+                    <div class="d-flex flex-column align-items-center gap-3">
+                        <input type="text" class="login-input" placeholder="account" id="loginaccount" name="loginaccount"/>
+                        <div style="width: 90%; text-align: center;">
+                            <input type="password" class="login-input" placeholder="Password" id="loginPassword" name="loginPassword"/>
+                            <button type="button" class="btn btn-sm btn-toggle-password" onclick="eye()">
+                                <img id="eye_icon" src="{% static '/home/other/eye-solid.svg' %}" alt="顯示密碼" width="20" >
+                            </button>
+                        </div>
+                        <button type="button" class="btn btn-login"  onclick="submitLoginForm()">登入</button>
+                        <p>還沒成為會員? <a class="color-primary border-bottom finger" href="/adduser/">註冊</a>。
+                        <a class="color-primary border-bottom finger" href="/userforget/">忘記密碼</a>
+                        </p>
+                        <p id="error-message" class="text-danger" style="display: none;"></p>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 登入會員傳送機制 -->
+<script>
+    document.getElementById("exampleModal").addEventListener("hidden.bs.modal", function () {
+        document.getElementById("loginForm").reset();
+        document.getElementById("error-message").style.display = "none";
+    });
+
+    function submitLoginForm() {
+        const form = document.getElementById("loginForm");
+        const formData = new FormData(form);
+
+        fetch("/login/", {
+            method: "POST",
+            headers: {
+                "X-CSRFToken": formData.get("csrfmiddlewaretoken"),
+            },
+            body: formData,
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === "success") {
+                window.location.href = data.redirect_url;
+            } else {
+                const errorMessage = document.getElementById("error-message");
+                errorMessage.style.display = "block";
+                errorMessage.textContent = data.message || "登入失敗，請稍後再試";
+            }
+        })
+        .catch(error => console.error("Error:", error));
+    }
+</script>
+
+<!-- 輸入密碼的眼睛 -->
+<script>
+    function eye() {
+        const passwordField = document.getElementById("loginPassword");
+        const passwordIcon = document.getElementById("eye_icon");
+    
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+            passwordIcon.src = "{% static '/home/other/eye-solid.svg' %}"; // 開眼睛圖示
+            passwordIcon.alt = "隱藏密碼";
+        } else {
+            passwordField.type = "password";
+            passwordIcon.src = "{% static '/home/other/eye-slash-solid.svg' %}"; // 閉眼睛圖示
+            passwordIcon.alt = "顯示密碼";
+        }
+    }
+</script>

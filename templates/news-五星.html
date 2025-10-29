@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>最新活動-五星評價</title>
+	{% load static %}
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="{% static '/css/style_Functionbar.css' %}" type="text/css" />
+	<style>
+		.bg{
+			background-image: url({% static '/home/news/活動-底圖.jpg' %});
+			background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: -1;
+		}
+
+		.container-fluid{
+			font-family: "標楷體";
+			font-weight: bold;
+		}
+		.news-home{
+			text-align: center;
+		}
+		.news-home img{
+			width:90%; 
+			height: auto;
+		}
+
+		.col-title-news{
+			background-color: rgba(243, 219, 179, 0.8);
+			padding-top: 50px;
+			display: flex; 
+			flex-direction: column; 
+			align-items: center;
+		}
+		.news-title-text{
+			writing-mode: vertical-lr; 
+
+		}
+		.news-title-text1{
+			font-size: 46px;
+		}
+
+		.news-title-text2{
+			font-size: 26px; 
+			margin-top: 120px;
+		}
+		.news-title-img{
+			display: flex; 
+			justify-content: center;
+		}
+		.news-title-img img{
+			width: 80%;
+		}
+
+		.row-second{
+			height: 100px; 
+			display: flex; 
+			align-items: center; 
+			text-align: center ;
+			flex-direction: column;
+		}
+		.title-all{
+			background-color: rgb(255, 243, 224, 0.7);
+		}
+		.title-date{
+			font-size: 18px; 
+			margin-top: 15px;
+		}
+		.title-text{
+			font-size: 34px;
+		}
+		.title-img{
+			height: 350px; 
+			text-align: center;
+		}
+		.title-img img{
+			height: 450px;
+		}
+		.content-text{
+			font-size: 24px; 
+			margin-top: 130px;
+			margin-bottom: 100px;
+		}
+		.footer {
+            background-color: #333;
+            color: white;
+            font-family:"Comic Sans MS","Noto Sans TC","標楷體";
+            width: 100%; 
+            padding: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .footer p{
+            margin-left: 20px;
+        }
+        .footer img{
+            height: 70px;
+        }
+		
+
+	</style>
+</head>
+<body>
+	{% include "FunctionBar.html" %}
+
+
+	<div class="bg" style="margin-top:130px;">
+		<div class="container-fluid">
+			<div class="news-home">
+				<img src="{% static '/home/news/活動用封面.jpg' %}">
+			</div>
+		</div>
+		<div class="container-fluid body">
+			<div class="row row-first">
+				<div class="col-lg-2"></div>
+				<div class="col-lg-1 col-title-news">
+					<div class="news-title-text">
+						<div class="news-title-text1">
+							最新活動
+						</div>
+						<div class="news-title-text2">
+							ニュース
+						</div>
+					</div>
+					<div class="news-title-img  d-none d-lg-block" >
+						<img  src="{% static '/home/other/lantern3-1.png' %}">
+					</div>
+				</div>
+				<div class="col-lg-7 title-all">
+					<div class="row row-second">
+						<div class="title-date">
+							即日起～老闆說停為止
+						</div>
+						<div class="col title-text">
+							Google 五星評論 
+						</div>
+					</div>
+					<div class="row">
+						<div class="col title-img ">
+							<img src="{% static '/home/news/五星.jpg' %}">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col content-text">
+							<p style="text-align: center;">老闆想要讓更多人認識、看到暮秋，所以要請大家幫幫忙(´･ω･`)</p>
+							</br>
+							<ul>
+								活動內容如下：
+								<li>不論你是外帶或內用，動動小手手幫我們google 5星好評，附上照片或是文字，暮秋請你喝燒酒！</li>
+							</ul>
+							<hr>
+							<ol>
+								備註：
+								<li>燒酒圖片僅供參考，牌子不一定會一樣。</li>
+								<li>我們很樂意將燒酒裝盒裝袋讓你們帶回家，但請勿酒後開車！</li>
+								<li>有幾個帳號評論就送幾瓶燒酒。</li>
+								<li>店家保有更改活動的權利，若是當日燒酒送完，會另行通知。</li>
+							</ol>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-1"></div>
+			</div>
+		</div>
+	</div>
+	<div>
+		<footer class="footer">
+			<img src="{% static '/home/other/logo3.jpg' %}">
+			<p >© 2024 暮秋. 版權所有。</p>
+		</footer>
+	</div>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

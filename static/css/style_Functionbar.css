@@ -1,0 +1,95 @@
+
+.navbar-expand-lg{
+	position: fixed;
+	width: 100%;
+	z-index: 1000;          /* 確保導航欄層級足夠高，避免被其他元素覆蓋 */
+	margin-top: -100px;
+}
+.logo-small{
+	margin-left: auto; 
+	margin-right: auto;
+	width: 100px;
+}
+.logo-big{
+	height: 90px; 
+	width: auto; 
+	z-index: 1; 
+}
+.title-storename{
+	font-size: 20px;
+	font-weight: bold;
+	font-family:"標楷體";
+}
+
+.navbar-brand {
+	font-size: 36px;
+	font-weight: bold;
+}
+.navbar-nav {
+	font-size: 20px;
+	font-weight: bold;
+	font-family:"標楷體";
+}
+.nav-item {
+	margin-right: 10px;
+	margin-top: auto;
+	margin-bottom: auto;
+}
+.nav-link:hover {
+	transform: translateY(5px); /* 下移5像素動畫 */
+	transition: transform 0.5s ease;
+} 
+.nav-news{
+	position: relative;
+}
+.nav-news-img{
+	width: 50px; 
+	position:absolute; 
+	z-index: 0; 
+	top: 0px; 
+	left: -15px;
+}
+.nav-login{
+	width: 25px;
+	height: 35px;
+}
+
+/*------------------------------------------------------------------------------------------*/
+ /*會員登入*/
+ .modal-content-login {
+	min-height: 50vh;
+	max-height: 50vh;
+}
+
+.modal-body-login{
+	margin-top: 30px;
+	width: 100%;
+	height: 40px;
+	border: 1px solid var(--color-secondary);
+	border-radius: 8px;
+	padding: 0 8px;
+	
+}
+.login-input {
+	width: 80%;
+	height: 40px;
+	padding: 0 16px;
+	border: 1px solid var(--color-secondary);
+	border-radius: 8px;
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
+}
+.btn-login {
+	width: 80%;
+	height: 40px;
+	padding: 0 16px;
+	border: 1px solid var(--color-secondary);
+	border-radius: 8px;
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
+	background: var(--color-primary);
+	color: var(--color-white);
+}
+
+
+
+/*會員登入 end*/
+/*------------------------------------------------------------------------------------------*/

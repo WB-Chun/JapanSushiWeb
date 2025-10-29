@@ -1,0 +1,214 @@
+
+
+
+.navbar-expand-lg{
+    position: fixed;
+    width: 100%;
+    z-index: 1000;          /* 確保導航欄層級足夠高，避免被其他元素覆蓋 */
+    margin-top: -100px;
+}
+.logo-small{
+    margin-left: auto; 
+    margin-right: auto;
+    width: 100px;
+}
+.logo-big{
+    height: 90px; 
+    width: auto; 
+    z-index: 1; 
+}
+.title-storename{
+    font-size: 20px;
+    font-weight: bold;
+    font-family:"標楷體";
+}
+
+.navbar-brand {
+    font-size: 36px;
+    font-weight: bold;
+}
+.navbar-nav {
+    font-size: 20px;
+    font-weight: bold;
+    font-family:"標楷體";
+}
+.nav-item {
+    margin-right: 10px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+.nav-link:hover {
+    transform: translateY(5px); /* 下移5像素動畫 */
+    transition: transform 0.5s ease;
+} 
+.nav-news{
+    position: relative;
+}
+.nav-news-img{
+    width: 50px; 
+    position:absolute; 
+    z-index: 0; 
+    top: 0px; 
+    left: -15px;
+}
+.nav-login{
+    width: 25px;
+    height: 35px;
+}
+
+/*------------------------------------------------------------------------------------------*/
+ /*會員登入*/
+ .modal-content-login {
+    min-height: 50vh;
+    max-height: 50vh;
+}
+
+.modal-body-login{
+    margin-top: 30px;
+    width: 100%;
+    height: 40px;
+    border: 1px solid var(--color-secondary);
+    border-radius: 8px;
+    padding: 0 8px;
+    
+}
+.login-input {
+    width: 80%;
+    height: 40px;
+    padding: 0 16px;
+    border: 1px solid var(--color-secondary);
+    border-radius: 8px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
+}
+.btn-login {
+    width: 80%;
+    height: 40px;
+    padding: 0 16px;
+    border: 1px solid var(--color-secondary);
+    border-radius: 8px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
+    background: var(--color-primary);
+    color: var(--color-white);
+}
+/*會員登入 end*/
+
+.main{
+    margin-top: 100px;
+}
+
+
+/*訂位查詢*/
+.Reserve-search-card {
+    background-image: url();
+    background-size: cover;
+    z-index: 1; 
+    font-family:"Comic Sans MS","Noto Sans TC","標楷體";
+    font-size: 20px;
+    font-weight: bold;
+}
+
+
+.Reserve-search-booking-form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border: solid #ee7b1c 3px;
+    border-top: solid #ee7b1c 10px;
+    position: relative;
+}
+
+.Reserve-search-icon {
+    font-size: 24px;
+    color: #ee7b1c;
+}
+
+.Reserve-search-button {
+    background-color: #ee7b1c;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    width: 100px;
+}
+
+.reserver_check_button:hover {
+    background-color: #fd2600;
+}
+
+.reserver_check_ok{
+    background-color: #fcbf8a;
+    height: 130px;
+    border: solid 3px #ee7b1c;
+    border-bottom: solid 8px #ee7b1c;
+    border-radius: 10px;
+}
+/*訂位查詢 end*/
+
+
+/*店別 card*/
+.card {
+    font-size: 20px;
+    font-family: "標楷體";
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 300px; 
+    border: solid 4px #ee7b1c;
+
+}
+.card:hover {
+    transform: scale(1.05); /* 當鼠標懸停時，卡片放大 */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* 增加陰影效果 */
+}
+.card-total{
+    margin-top: 50px; 
+    padding-bottom: 100px;
+}
+.card-title{
+    font-weight: bolder;
+}
+.bookNow{
+    justify-content: center; 
+    width: 100%;
+}
+/*店別 card end*/
+
+/*訂位須知*/
+.Notice{
+    margin-bottom: 100px;
+}
+.Notice-normal{
+    font-size: 26px; 
+    font-weight: bolder;
+    color: black;
+    text-decoration: none;
+    font-family:"Comic Sans MS","Noto Sans TC","標楷體";
+}
+.Notice-group{
+    font-size: 26px; 
+    font-weight: bolder;
+    color: black;
+    text-decoration: none;
+    font-family:"Comic Sans MS","Noto Sans TC","標楷體";
+}
+/*訂位須知 end*/    
+ul{
+    font-size: 22px;
+    font-family:"Comic Sans MS","Noto Sans TC","標楷體";
+}
+
+.footer {
+    background-color: #333;
+    color: white;
+    font-family:"Comic Sans MS","Noto Sans TC","標楷體";
+    width: 100%; 
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.footer p{
+    margin-left: 20px;
+}
+.footer img{
+    height: 70px;
+}
+

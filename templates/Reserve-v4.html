@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>餐廳預訂</title>
+    {% load static %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static '/css/style_reserve.css' %}" type="text/css" />
+    <link rel="stylesheet" href="{% static '/css/style_Functionbar.css' %}" type="text/css" />
+    <style>
+
+        .bg-img {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background-image: url('{% static "/registration/訂位-底圖1.jpg" %}');
+            background-repeat: no-repeat;
+            z-index: -1;
+        }
+        
+        .bg-img::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.5); /* 白色半透明疊加層，透明度 50% */
+            z-index: 1; /* 疊加層在背景上方 */
+        }
+        
+        .bg-img2 {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            background-repeat: no-repeat;
+            background-position: center; /* 圖片置中 */
+            background-size: cover; /* 確保圖片覆蓋整個背景且保持比例 */
+            background-image: url('{% static "/registration/雲.jpg" %}');
+            z-index: -2;
+        }
+
+        /*中心大標題*/
+        .title-jumbotron {
+            position: relative;
+            height: 400px;
+            min-height: 500px;
+            /* background-size: cover;
+            background-position: center; */
+            background-image: url('{% static "/registration/訂位-封面.png" %}');
+            
+            background-repeat: no-repeat;
+        }
+
+        /*中心大標題 end*/
+
+        
+    </style>
+</head>
+<body>
+    <div class="bg-img"></div>
+    <div class="bg-img2"></div>
+
+    <!-- logo 訂位系統 and 選項 -->
+    <div class="Res_total">
+        {% include "FunctionBar.html" %}
+
+        <!-- 標題 -->
+        <div class="main">
+            <div class="title-jumbotron jumbotron-fluid text-center"></div>
+
+            <div class="Reserve-search-card">
+                <!-- 訂位位子查詢 -->
+                <form action='/reserve/' method="post" style="margin-top: -130px;">
+                    {% csrf_token %}
+                    <div class="container mt-5">
+                        <div class="Reserve-search-booking-form">
+                            <div class="row align-items-center">
+                                <div class="col-md-2 text-center">
+                                    <span class="Reserve-search-icon">&#128269;</span>
+                                    <h3 class="d-inline-block ml-2" style="font-weight: bold;">訂位查詢</h3>
+                                </div>
+
+                                <!-- 店別下拉選單 -->
+                                <div class="col-md-2">
+                                    <div class="Reserve-search-form-group">
+                                        <label for="restaurant">店別</label>
+                                        <select name="data_store" class="form-select" id="restaurant" style="font-size: 18px;">
+                                            <option value="">請選擇</option>
+                                            {% for restaurant in restaurant_db %}
+                                                <option value="{{ restaurant.id }}" {% if restaurant.id|stringformat:"s" == restaurant_id %}selected{% endif %}>
+                                                    {{ restaurant.name }}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="peopleDropdown">成員</label>
+                                        <div class="dropdown" >
+                                            <!-- 成員按鈕 -->
+                                            <button class="btn dropdown-toggle w-100 text-start"  id="peopleDropdown" data-bs-toggle="dropdown" style="border: solid 1px rgb(0, 0, 0, 0.2);">
+                                                2 位大人, 0 位兒童
+                                            </button>
+                                             <!-- 隱藏的 input，將成員的選擇結果提交 -->
+                                        
+                                            <input type="hidden" name="data_people" id="people" value="{{ people_info|default:'2 位大人, 0 位兒童' }}">
+                                            <!-- 下拉內容 -->
+                                            <div class="dropdown-menu p-2" aria-labelledby="peopleDropdown" style="width: 350px;">
+                                                <!-- 大人數量 -->
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <span>大人</span>
+                                                    <div class="input-group" style="width: 150px;">
+                                                        <button class="btn btn-outline-secondary btn-sm" type="button" onclick="decreaseAdults()">-</button>
+                                                        <input type="text" class="form-control text-center" id="adultsCount"  readonly>
+                                                        <button class="btn btn-outline-secondary btn-sm" type="button" onclick="increaseAdults()">+</button>
+                                                    </div>
+                                                </div>
+                                                <!-- 兒童數量 -->
+                                                <div class="d-flex justify-content-between align-items-center mt-2">
+                                                    <span>兒童 (0-未滿12歲)</span>
+                                                    <div class="input-group" style="width: 150px";>
+                                                        <button class="btn btn-outline-secondary btn-sm" type="button" onclick="decreaseChildren()">-</button>
+                                                        <input type="text" class="form-control text-center" id="childrenCount" readonly>
+                                                        <button class="btn btn-outline-secondary btn-sm" type="button" onclick="increaseChildren()">+</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="meal">用餐餐期</label>
+                                        <select name="data_period" class="form-select" id="meal" style="font-size: 18px;">
+                                            <option disabled selected>請選擇</option>
+                                            {% for period in unique_periods %}
+                                                <option value="{{ period }}" {% if period == meal_period %}selected{% endif %}>
+                                                {{ period }}
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="date">用餐時間</label>
+                                        <input type="date" name="data_datetime" class="form-control" id="date" value="{{ date }}">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2 text-center">
+                                    <button type="submit" class="btn Reserve-search-button btn-block" >搜尋</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <!--  搜尋結果  -->
+
+                <div class="container mt-5 reserver_check_ok"  id="available-times-section" style="{% if not available_times %}display: none;{% endif %}">
+                    <h2 class="text-center mb-4" style="font-weight: bold; margin-top: 10px;">可訂位時段</h2>
+                    {% if available_times %}
+                        <div class="d-flex flex-wrap justify-content-center gap-3" >
+                            {% for time in available_times %}
+                                {% if time.remaining_seats > 0 %}
+                                    <button class="btn btn-primary reserver_check_button" data-bs-toggle="modal" data-bs-target="#exampleModal_booking_date" style="font-size: 18px;"
+                                            data-slot-time="{{ time.time }}" 
+                                            data-remaining-seats="{{ time.remaining_seats }}">
+                                        {{ time.time }} - 剩餘座位: {{ time.remaining_seats }}
+                                    </button>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="container mt-5" id="available-times-section"
+                    <div>
+                        {% if all_fully_booked %}
+                            <p class="text-center">很抱歉，目前無可用時段，請嘗試其他日期或人數。</p>
+                        {% endif %}
+                    </div>
+                </div>
+            
+                <!-- 確認時段的 Modal -->
+                <div class="modal fade" id="exampleModal_booking_date" tabindex="-1" aria-labelledby="exampleModal_booking_dateLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModal_booking_dateLabel">確認您的訂位時段</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>您選擇的訂位時段為：{{meal_period}}，<span id="selected-slot-time"></span></p>
+                                <p>人數為：{{people_info}}</p>
+                                <p>是否確認這個時段？</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                                <button type="button" class="btn btn-primary" id="confirm_booking">確認</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const bookingModal = document.getElementById('exampleModal_booking_date');
+                    
+                    bookingModal.addEventListener('show.bs.modal', function (event) {
+                        const button = event.relatedTarget; // 引發模態框顯示的按鈕
+                        const slotTime = button.getAttribute('data-slot-time');
+
+                        // 從 data_people input 中獲取人數
+                        const peopleCount = document.getElementById('people').value;
+                
+                        // 更新模態框的內容
+                        document.getElementById('selected-slot-time').textContent = slotTime;
+
+                    });
+                });
+
+                const login_ornot = {{ user.is_authenticated|yesno:"true,false" }};
+
+                document.getElementById("confirm_booking").addEventListener("click", function () {
+                    if (login_ornot) {
+                        // 從模態框中獲取已選擇的時段信息
+                        const slotTime = document.getElementById("selected-slot-time").textContent;
+                        const restaurantId = document.getElementById("restaurant").value;
+                        const peopleInfo = document.getElementById("people").value;
+                        const mealPeriod = document.getElementById("meal").value;
+                        const date = document.getElementById("date").value;
+                        console.log("test1","asasasas")
+                        // 發送 AJAX 請求
+                        fetch("/reserve/booking/", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                "X-CSRFToken": "{{ csrf_token }}"  // Django CSRF token
+                            },
+                            body: JSON.stringify({
+                                restaurant_id: restaurantId,
+                                people_info: peopleInfo,
+                                meal_period: mealPeriod,
+                                date: date,
+                                slot_time: slotTime
+                            })
+                        })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error("Network response was not ok");
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            if (data.success) {
+                                alert(`預訂成功！您的預訂編號是：${data.reservation_id}`);
+                                // 可選：在頁面上顯示預訂成功訊息
+
+                                // 重置表單資料
+                                document.getElementById("restaurant").value = "";
+                                document.getElementById("meal").value = "請選擇";
+                                document.getElementById("date").value = "";
+                                document.getElementById("adultsCount").value = 2;
+                                document.getElementById("childrenCount").value = 0;
+                                document.getElementById("people").value = "2 位大人, 0 位兒童";
+                                document.getElementById("peopleDropdown").textContent = "2 位大人, 0 位兒童";
+                                // 清除 localStorage 中的記憶資料
+                                localStorage.removeItem("people");
+
+                                // 關閉模態框並移除背景效果
+                                const modalElement = document.getElementById('exampleModal_booking_date');
+                                const modalInstance = bootstrap.Modal.getInstance(modalElement);
+                                modalInstance.hide();  // 使用 Bootstrap 的 hide() 方法
+                                window.location.href = window.location.href;
+                            } else {
+                                alert("預訂失敗，請再試一次。");
+                            }
+                        })
+                        .catch(error => {
+                            console.error("發生錯誤：", error);
+                            alert("預訂失敗，請檢查網路連線或稍後再試。");
+                        });
+                    }else {
+                        alert('請先登入會員~~!!');
+                    }
+                });
+
+                </script>
+
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        const form = document.querySelector('form[action="/reserve/"]');
+                        const restaurantSelect = document.getElementById('restaurant');
+                        const peopleInput = document.getElementById('people');
+                        const mealPeriodSelect = document.getElementById('meal');
+                        const dateInput = document.getElementById('date');
+                        
+                        form.addEventListener('submit', function (event) {
+                            // 檢查欄位是否填寫
+                            if (!restaurantSelect.value || !peopleInput.value || mealPeriodSelect.value === '請選擇' || !dateInput.value) {
+                                event.preventDefault();  // 阻止表單提交
+                                alert("訂位資料未填寫，請填寫所有欄位。");
+                                return;
+                            }
+                        });
+                    });
+                </script>
+
+                
+                <!-- 店別 -->
+                <div class="container card-total">    
+                    <div class="row">
+                        {% for restaurant in restaurant_db %}
+                        <div class="col-lg-3 col-md-6">
+                            <div class="card">
+                                <img class="card-img-top" src="{% static '/registration/' %}{{ restaurant.store_img }}"/>
+                                <div class="card-body">
+                                    <div class="card-title">{{ restaurant.name }}</div>
+                                    <div class="card-text pb-3">{{ restaurant.address }}</div>
+                                    <button class="btn btn-primary bookNow" data-store="{{ restaurant.id }}">立即訂位</button>
+                                </div>  
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- 訂位須知 -->
+            <div class="container Notice">
+                <a class="Notice-normal">【一般訂位】</a>
+                <ul>
+                    <li>網路開放時間為：一個月內。</li>
+                    <li style="color: red;">如欲用餐日期顯示訂位已額滿，建議可致電門市洽詢。</li>
+                    <li>網路訂位是否成功，可至「訂位紀錄」進行查詢。</li>
+                    <li>用餐當日訂位保留時間為10分鐘，請準時入席，逾時將取消訂位。</li>
+                    <li>網路訂位成功者，如未到場且未於線上或電話通知分店取消訂位，視同「訂位未到且未提前通知取消」。</li>
+                </ul>
+
+                <a class="Notice-group">【團體訂位】</a>
+                <ul>
+                    <li>網路訂位若超過10人以上，需線上刷卡預付定金，訂位方可成功。</li>
+                    <li>網路訂位單筆上限為30人，超過30人以上請致電門市預約訂位。</li>
+                    <li>用餐當日來客數不得低於訂位總人數九成，否則餐費依九成人數計算。</li>
+                    <li>如遇天災或其它因素，此定金可順延三個月內抵用。</li>
+                    <li>定金支付完成後無法異動預訂用餐日期。</li>
+                </ul>
+            </div>
+        </div>
+
+        <div>
+            <footer class="footer">
+                <img src="{% static '/home/other/logo3.jpg' %}">
+                <p >© 2024 暮秋. 版權所有。</p>
+            </footer>
+        </div>
+    </div>
+
+    
+    <script>
+        /*JavaScript Card餐廳立即訂位*/
+
+        // 取得所有 "立即訂位" 按鈕
+        const bookNowButtons = document.querySelectorAll('.bookNow');
+
+        // 為每個按鈕添加點擊事件監聽器
+        bookNowButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // 取得按鈕上的 data-store 屬性值
+                const storeValue = this.getAttribute('data-store');
+                
+                // 取得下拉選單元素
+                const storeDropdown = document.getElementById('restaurant');
+                
+                // 設定下拉選單的值為按鈕點選的店別
+                storeDropdown.value = storeValue;
+            });
+        });
+
+        /*JavaScript 增減人數功能*/
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // 從隱藏的 input 取得初始人數資料
+            const peopleInfo = document.getElementById('people').value || '2 位大人, 0 位兒童';
+    
+            // 初始化大人小孩數量，解析 peopleInfo
+            let adultsCount = peopleInfo.match(/(\d+) 位大人/) ? parseInt(peopleInfo.match(/(\d+) 位大人/)[1]) : 2;
+            let childrenCount = peopleInfo.match(/(\d+) 位兒童/) ? parseInt(peopleInfo.match(/(\d+) 位兒童/)[1]) : 0;
+    
+
+            // 更新顯示和儲存
+            function updatePeopleInput() {
+                const input = document.getElementById('people');
+                input.value = `${adultsCount} 位大人, ${childrenCount} 位兒童`;
+                localStorage.setItem('people', input.value);
+
+                const buttonLabel = `${adultsCount} 位大人${childrenCount > 0 ? `, ${childrenCount} 位兒童` : ''}`;
+                document.getElementById('peopleDropdown').textContent = buttonLabel;
+        }
+    
+            // 初始化顯示人數
+            document.getElementById('adultsCount').value = adultsCount;
+            document.getElementById('childrenCount').value = childrenCount;
+            updatePeopleInput();
+    
+            // 大人數量增減
+            function increaseAdults() {
+                event.stopPropagation();
+                adultsCount++;
+                document.getElementById('adultsCount').value = adultsCount;
+                updatePeopleInput();
+            }
+    
+            function decreaseAdults() {
+                event.stopPropagation();
+                if (adultsCount > 1) {
+                    adultsCount--;
+                    document.getElementById('adultsCount').value = adultsCount;
+                    updatePeopleInput();
+                }
+            }
+    
+            // 兒童數量增減
+            function increaseChildren() {
+                event.stopPropagation();
+                childrenCount++;
+                document.getElementById('childrenCount').value = childrenCount;
+                updatePeopleInput();
+            }
+    
+            function decreaseChildren() {
+                event.stopPropagation();
+                if (childrenCount > 0) {
+                    childrenCount--;
+                    document.getElementById('childrenCount').value = childrenCount;
+                    updatePeopleInput();
+                }
+            }
+    
+            // 將增減函數綁定到按鈕
+            window.increaseAdults = increaseAdults;
+            window.decreaseAdults = decreaseAdults;
+            window.increaseChildren = increaseChildren;
+            window.decreaseChildren = decreaseChildren;
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

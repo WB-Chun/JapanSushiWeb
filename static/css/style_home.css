@@ -1,0 +1,439 @@
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+TC');
+
+.fade-in-right {
+	opacity: 0;
+	animation: fadeInRight 2s ease forwards;
+}
+.fade-in-left {
+	opacity: 0;
+	animation: fadeInLeft 2s ease forwards;
+}
+
+@keyframes fadeInRight {
+	0% {
+		transform: translateX(100%);
+		opacity: 0;
+	}
+	100% {
+		transform: translateX(0);
+		opacity: 1;
+	}
+}
+
+@keyframes fadeInLeft {
+	0% {
+		transform: translateX(-100%);
+		opacity: 0;
+	}
+	100% {
+		transform: translateX(0);
+		opacity: 1;
+		
+	}
+}
+
+.fade-in-image1 {
+	opacity: 0;
+	animation: fadeIn 2s ease forwards;
+	animation-delay: 0.5s;
+  }
+
+.fade-in-image2 {
+	opacity: 0;
+	animation: fadeIn 2s ease forwards;
+	animation-delay: 1s;    
+  }
+.fade-in-image3 {
+	opacity: 0;
+	animation: fadeIn 2s ease forwards;
+	animation-delay: 0.5s;
+  }
+
+@keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+img.left1{
+	position: absolute; 
+	width: 20%;
+	left: -40px; 
+	bottom: -200px; 
+	z-index: 1000;
+	animation: sway 3s ease-in-out infinite;
+}
+@media (max-width:1800px){
+	img.left1{
+		display: none;
+	}
+}
+
+img.left2{
+	position: absolute; 
+	width: 350px; 
+	right: 10px;
+	bottom: -850px; 
+	z-index: 1000;
+	animation: sway 3s ease-in-out infinite;
+}
+@media (max-width:1800px){
+	img.left2{
+		display: none;
+	}
+}
+
+img.left3{
+	position: absolute; 
+	width: 350px; 
+	left: -40px; 
+	bottom: -1600px; 
+	z-index: 1000;
+	animation: sway 3s ease-in-out infinite;
+	
+}
+@media (max-width:1800px){
+	img.left3{
+		display: none;
+	}
+}
+
+@keyframes sway {
+	0% {
+		transform: translateX(0);
+	}
+	50% {
+		transform: translateX(5px);
+	}
+	100% {
+		transform: translateX(0);
+	}
+}
+
+.carousel{
+	margin-top: 100px; 
+	max-height: 800px;
+}
+.carousel-img-bg{
+	height: 100%; 
+	width: 100%; 
+	position: absolute;
+}
+.carousel-img{
+	max-width: 1850px;         /*指定圖片的寬度和高度*/
+	max-height: 800px; 
+	width: 75%;
+	height: 100%;
+}
+
+
+
+/* News文字部分 */
+.news-row{
+	margin-top: 200px;
+	height: 500px;
+	height: 100%;
+	margin-left: 100px;
+	background: linear-gradient(to right, rgb(241, 178, 95, 0.8), rgb(243, 232, 218, 0.8) 60%);         
+	border-radius: 30px 0 0 30px;
+}
+
+.news-col-lg-2{
+	padding-top: 20px; 
+	padding-bottom: 20px; 
+	border-right: rgb(245, 155, 71) solid;
+}
+.new-col-lg-10{
+	padding-right: 100px; 
+	padding-left: 100px;
+}
+.news-title{
+	justify-content: center;
+	display: flex;
+	align-items: start;
+}
+.news-img-item-date{
+text-align: center; 
+font-size: 18px; 
+font-weight: bold;
+}
+.news-text {
+	writing-mode: vertical-rl; /* 使文字垂直排列 */
+	text-align: center;
+	font-weight: bold;
+	margin-top: 20px;
+}
+.news-ch{
+	font-size: 42px;
+	font-family: "標楷體";
+}
+.news-jap{
+	font-size: 24px;
+	margin-top: 120px;
+}
+.lantern-image img {
+	width: 100px;
+	height: 230px;
+	margin-right: 50px;
+}
+.news-img-item{
+	font-family:"Comic Sans MS","Noto Sans TC";
+}
+.news-img-item-title {
+	font-size: 24px;
+	display: flex;
+	flex-direction: column;
+	align-items: center; /* 水平居中 */
+	justify-content: center; /* 垂直居中 */
+}
+
+
+/***************/
+
+.slick-slide {
+	transform: scale(0.8);                           /*其他圖的大小比例*/
+	transition: all 0.6s ease-in-out;
+	padding: 30px;                                 /* 調小padding，减少上下間距 */
+	margin-top: 20px;                                /* 調整圖片之間的左右間距 */
+	width: 350px; 
+}
+
+.slick-slide img {
+	max-width: 350px;
+	max-height: 280px;
+	transition: all 0.4s ease-in-out;
+}
+
+.slick-center {
+	transform: scale(1.2);
+}
+
+/************************/
+.slider-container {
+	position: relative; /* 相对定位以定位按钮 */
+}
+.slick-prev-custom, .slick-next-custom {
+	background-color: rgba(0, 0, 0, 0.5); /* 半透明背景 */
+	color: white;
+	border: none;
+	padding: 10px 20px;
+	position: absolute; /* 絕對定位 */
+	top: 50%; /* 垂直居中 */
+	transform: translateY(-50%); /* 将按钮居中显示 */
+	cursor: pointer;
+	z-index: 1; /* 确保按钮显示在其他元素上方 */
+}
+.slick-prev-custom {
+	left: 10px; /* 将左侧按钮定位到左边 */
+}
+
+.slick-next-custom {
+	right: 10px; /* 将右侧按钮定位到右边 */
+}
+
+.slick-prev-custom:hover, .slick-next-custom:hover {
+	background-color: rgba(0, 0, 0, 0.7); /* 鼠标悬停时背景色加深 */
+}
+
+
+/*----------------------------------------------------------------------*/
+.us-row{
+	margin-top: 200px;
+	background: linear-gradient(to left, rgb(241, 178, 95, 0.8), rgb(243, 232, 218, 0.8) 60%);
+	margin-right: 100px;
+	border-radius: 0 30px 30px 0;
+}
+.us-col{
+	border-left: rgb(245, 155, 71) solid;
+}
+.us-title{
+	justify-content: center;
+	display: flex;
+	align-items: start;
+}
+.us-title-text {
+	writing-mode: vertical-rl; /* 使文字垂直排列 */
+	text-align: center;
+	font-weight: bold;
+	margin-top: 30px;
+}
+.lantern-image{
+	max-width: 100%; 
+	height: auto;
+	margin-right: 15px;
+}
+.us-ch{
+	font-size: 42px;
+	font-family: "標楷體";
+}
+.us-jap{
+	font-size: 24px;
+	margin-top: 100px;
+}
+.us-img1{
+	width: 100%; 
+	height: auto;
+	opacity: 0;
+}
+
+ /* 預設情況下圖片的樣式 */
+.us-img2 {
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+}
+.us-text-img{
+	max-width: 150px; 
+	max-height: 150px;
+}
+.us-text{
+	font-size: 24px; 
+	font-weight: bolder; 
+	font-family: 標楷體; 
+	margin-top: 30px;
+}
+
+/* 當螢幕寬度小於1900px時調整圖片尺寸 */
+@media (max-width: 1800px) {
+	img.us-img2 {
+		position: relative;
+		height: auto;
+	}
+}
+@media (max-width: 1650px) {
+	img.us-img2 {
+		position: relative;
+		height: auto;
+	}
+}
+div.test{
+	position:absolute; 
+	width: 600px; 
+	height: 450px; 
+	margin-top: -100px; 
+	margin-left: 450px;
+}
+@media (max-width: 1800px){
+	div.test{
+		position: absolute;
+		width: 400px; 
+		height: 150px; 
+		margin-top: -50px; 
+		margin-left: 400px;
+	}
+}
+@media (max-width: 1650px){
+	div.test{
+		position: relative;
+		width: 100%; 
+		height: 100%; 
+		margin-top: 0px; 
+		margin-left: 0px;
+	}
+}
+
+
+/*----------------------------------------------------------------------*/
+.row-store{
+	margin-top: 200px;
+}
+.col-store{
+	background: linear-gradient(to bottom, rgb(241, 178, 95, 0.8), rgb(243, 232, 218, 0.8) 60%);
+	border-radius: 30px 30px 0 0;
+}
+.row-store2{
+	border-bottom: rgb(245, 155, 71) solid;
+	margin-top: 50px;
+}
+.store-title{
+	display: flex; 						/*display: flex 属性，以便使用 flexbox 布局*/	
+	justify-content: center; 			    /*將子元素在垂直方向置中。*/	
+	align-items: center;				/*將子元素在水平方向置中。*/
+	flex-direction: column;				/*將子元素垂直排列（預設水平排列）。*/
+	height: 90%;						/*100% 確保充滿其父容器的高度，以便可以正確居中對齊。*/
+	width: 50%;	
+	font-weight: bold;
+}
+.store-ch{
+	font-size: 42px;
+	font-family: "標楷體";
+}
+.store-jap{
+	font-size: 24px;
+	margin-left: 200px;
+	white-space: nowrap;
+	
+}
+.store-inf{
+	font-size: 24px;
+	font-family:"Comic Sans MS","Noto Sans TC","標楷體";
+}
+.store-img{
+	position: relative;
+}
+.store-img img{
+	position: absolute; 
+	bottom: 0px; 
+	left: 0; 
+	max-width: 100%; 
+	max-height: 100%;
+}
+
+.footer {
+	background-color: #333;
+	color: white;
+	font-family:"Comic Sans MS","Noto Sans TC","標楷體";
+	width: 100%; 
+	padding: 30px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.footer p{
+	margin-left: 20px;
+}
+.footer img{
+	height: 70px;
+}
+
+/* .bg-img {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-image: url('{% static '/home/秋扇.jpg' %}');
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	z-index: -1;
+} */
+
+/* 背景覆蓋 */
+.loading-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(255, 255, 255);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 9999;
+	flex-direction: column;
+}
+.spinner-container {
+	position: relative;
+	width: 150px;
+	height: 150px;
+}
+.spinner-container img {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}

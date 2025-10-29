@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>暮秋珍饈</title>
+  {% load static %}
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+  <!-- Link Swiper's CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="{% static '/css/style_food.css' %}" type="text/css" />
+  <link rel="stylesheet" href="{% static '/css/style_Functionbar.css' %}" type="text/css" />
+
+
+  <style>
+
+    .title-jumbotron {
+        position: relative;
+        height: 400px;
+        min-height: 500px;
+        /* background-size: cover;
+        background-position:center ; */
+        background-image: url('{% static "/food/菜單-封面2.jpg" %}');
+        background-repeat: no-repeat;
+    }
+
+    .bg-img {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('{% static "/food/日傳背景圖.jpg" %}');
+        background-repeat: no-repeat;
+        background-position: center; /* 圖片置中 */
+        background-size: cover; /* 確保圖片覆蓋整個背景且保持比例 */
+        z-index: -1;
+    }
+
+  </style>
+</head>
+
+<body>
+    <div class="bg-img"></div>
+    {% include "FunctionBar.html" %}
+
+<div class="main">
+    <div class="title-jumbotron jumbotron-fluid text-center">
+    </div>
+
+  <!-- Swiper -->
+
+    <div class="swiper mySwiper-l">
+        <div class="swiper-wrapper">
+        <div class="swiper-slide change-slide">
+            <div class="container-fluid">
+                <div class="title">
+                    <img src="{% static '/food/刺身.png' %}">
+                </div>
+                <div class="row">
+                    <div class="col-1"></div>
+                    <div class="col-3 d-flex align-items-center" style="height: 400px;">
+                        <div class='swiper-top' style="width: 95%; height: 95%;">
+                            <div class="swiper mySwiper1 swiper-img">
+                                <div class="swiper-wrapper" >
+                                    <div class="swiper-slide"><img src="{% static '/order/food/赤身-旗魚.jpg' %}" alt=""></div>
+                                    <div class="swiper-slide"><img src="{% static '/order/food/赤身-鮭魚.jpg' %}" alt=""></div>
+                                    <div class="swiper-slide"><img src="{% static '/order/food/赤身-鮪魚.jpg' %}" alt=""></div>
+                                    <div class="swiper-slide"><img src="{% static '/order/food/赤身-花枝.jpg' %}" alt=""></div>
+                                    <div class="swiper-slide"><img src="{% static '/order/food/赤身-旗魚.jpg' %}" alt=""></div>
+                                    <div class="swiper-slide"><img src="{% static '/order/food/赤身-黃金魚.jpg' %}" alt=""></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-7 d-flex align-items-center justify-content-center" >
+                        <div class='swiper-top' style="width: 95%; height: 95%;">
+                            <div class="swiper mySwiper2 swiper-info">
+                                <div class="swiper-wrapper swiper-info-text">
+                                    <div class="swiper-slide bg-2" >
+                                        <div>
+                                            <h2>旗魚($100)</h2>
+                                            <ul>
+                                                鮭魚以其細緻的口感和豐富的脂肪層而著稱。
+                                            </ul>
+                                            <ul>
+                                                <li>口感：擁有柔軟而多汁的肉質，鮮嫩的口感中伴隨著淡淡的脂香。</li>
+                                                <li>風味：鮭魚的赤身部分風味清淡且帶有天然的甜味，搭配微鹹的餘韻，讓人回味無窮。</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide bg-1">
+                                        <div>
+                                            <h2>鮭魚($110)</h2>
+                                            <ul>
+                                                旗魚以其獨特的風味和細膩的質感而聞名，尤其是選用精選的赤身部位，更能帶給您鮮甜而濃郁的口感。
+                                            </ul>
+                                            <ul>
+                                                <li>口感：擁有結實而不失柔嫩的肉質，帶有天然的鮮甜味，是刺身中的經典選擇。</li>
+                                                <li>風味：其赤身部分擁有豐富的滋味和微妙的鹹鮮平衡，完美體現了海洋的純淨。</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide bg-2">
+                                        <div>
+                                            <h2>鮪魚($120)</h2>
+                                            <ul>
+                                                鮪魚以其鮮紅色的肉質和豐富的風味著稱，赤身部分更是擁有清爽而富有彈性的層次。
+                                            </ul>
+                                            <ul>
+                                                <li>口感：擁有結實而柔軟的肉質，口感清爽，是刺身中最為人知的選擇之一。</li>
+                                                <li>風味：味道清淡且鮮美，帶有微微的鐵質風味和海洋的純淨氣息。</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide bg-1">
+                                        <div>
+                                            <h2>花枝($100)</h2>
+                                            <ul>
+                                                因其清爽的口感和獨特的風味而受到食客的喜愛。花枝的肉質潔白細緻，帶有微微的甜味，讓人一嚐便愛上。
+                                            </ul>
+                                            <ul>
+                                                <li>口感：擁有彈牙而滑嫩的肉質，入口時充滿鮮甜和柔軟的質感。</li>
+                                                <li>風味：味道清新且帶有大海的自然氣息，細膩的鮮味令人回味無窮。</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide bg-2">
+                                        <div>
+                                            <h2>鯛魚($150)</h2>
+                                            <ul>
+                                                鯛魚的肉質潔白且略帶粉紅，口感柔嫩且帶有清新的海洋氣息，是刺身中不可錯過的選擇。
+                                            </ul>
+                                            <ul>
+                                                <li>口感：肉質緊實而細膩，入口即化，帶有微微的甜味和柔和的口感。</li>
+                                                <li>風味：具有淡雅的鮮甜味和清新的海洋風味，讓人感受到純粹的自然鮮美。</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide bg-1">
+                                        <div>
+                                            <h2>黃金魚 ($110)</h2>
+                                            <ul>
+                                                黃金魚卵的口感豐富且飽滿，輕輕咬開時能感受到魚卵在口中爆開，釋放出濃郁的海洋精華。
+                                            </ul>
+                                            <ul>
+                                                <li>口感：擁有結實而不失柔嫩的肉質，帶有天然的鮮甜味，是刺身中的經典選擇。</li>
+                                                <li>風味：具有天然的鹹鮮味和濃郁的鮮甜香氣，帶有一絲細膩的油脂感，完美呈現出海洋的純粹風味</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-button-next"></div>
+                                <div class="swiper-button-prev"></div>
+                                <div class="swiper-pagination"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-1"></div>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-slide change-slide">
+            <div class="container-fluid">
+                <div class="title" style="max-width: 220px;">
+                    <img src="{% static '/food/握壽司.png' %}">
+                </div>
+                <div class="row">
+                    <div class="col-1"></div>
+                    <div class="col-7 d-flex align-items-center justify-content-center" >
+                        <div class='swiper-top' style="width: 95%; height: 95%;">
+                            <div class="swiper mySwiper4 swiper-info">
+                                <div class="swiper-wrapper swiper-info-text">
+                                    <div class="swiper-slide bg-2" >
+                                        <div>
+                                            <h2>鰻魚 ($220)</h2>
+                                            <ul>
+                                                因其香甜的醬汁和細膩的口感而成為許多食客的最愛。
+                                            </ul>
+                                            <ul>
+                                                <li>口感：擁有滑嫩而多汁的肉質，搭配米飯時綿密而柔和，入口即化，餘味悠長。</li>
+                                                <li>風味：獨特的甜醬為鰻魚增添了豐富的層次，甜美中帶有鹹香，完美平衡了鰻魚的天然鮮味。</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide bg-1">
+                                        <div>
+                                            <h2>甜蝦 ($150)</h2>
+                                            <ul>
+                                                是一道深受食客喜愛的美食，以其自然的甜美和柔嫩的口感而聞名。新鮮的甜蝦散發出大海的清新香氣。
+                                            </ul>
+                                            <ul>
+                                                <li>口感：擁有細緻而滑嫩的肉質，入口時有著絲滑的質感和自然的甜味。</li>
+                                                <li>風味：天然的鮮甜味，與米飯結合後更加突出其鮮美。</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide bg-2">
+                                        <div>
+                                            <h2>北寄貝 ($150)</h2>
+                                            <ul>
+                                                富有獨特風味的佳餚，以其脆爽的口感和鮮美的風味而備受喜愛。
+                                            </ul>
+                                            <ul>
+                                                <li>口感：擁有彈牙而爽脆的肉質，入口時充滿鮮甜與微妙的海洋風味。</li>
+                                                <li>風味：自然的鮮甜味和淡淡的鹹香，與米飯的細膩結合，帶來獨特的味覺享受。</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide bg-1">
+                                        <div>
+                                            <h2>干貝 ($200)</h2>
+                                            <ul>
+                                                極具奢華的美食，以其細緻的口感和天然的甜味而聞名。
+                                            </ul>
+                                            <ul>
+                                                <li>口感：擁有絲滑且柔嫩的肉質，入口時充滿濃郁的鮮甜感，帶來極致的口感享受。</li>
+                                                <li>風味：自然的甜味和細膩的鮮味，輕輕咀嚼即可感受到其豐富的海洋氣息。</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide bg-2">
+                                        <div>
+                                            <h2>納豆 ($180)</h2>
+                                            <ul>
+                                                充滿獨特風味的美食，以其黏稠的質地和濃郁的發酵香氣而聞名。
+                                            </ul>
+                                            <ul>
+                                                <li>口感：黏滑且柔軟的質地，帶有獨特的黏性，口感介於絲滑和微微的嚼勁之間。</li>
+                                                <li>風味：具有發酵後的獨特香氣，帶有淡淡的堅果風味和濃郁的鮮味。</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-button-next"></div>
+                                <div class="swiper-button-prev"></div>
+                                <div class="swiper-pagination"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3 d-flex align-items-center" style=" height: 400px;">
+                        <div class='swiper-top' style="width: 95%; height: 95%;">
+                            <div class="swiper mySwiper3 swiper-img">
+                                <div class="swiper-wrapper" >
+                                    <div class="swiper-slide"><img src="{% static '/order/food/握壽司-鰻魚.jpg' %}" alt=""></div>
+                                    <div class="swiper-slide"><img src="{% static '/order/food/握壽司-甜蝦.jpg' %}" alt=""></div>
+                                    <div class="swiper-slide"><img src="{% static '/order/food/握壽司-北寄貝.jpg' %}" alt=""></div>
+                                    <div class="swiper-slide"><img src="{% static '/order/food/握壽司-干貝.jpg' %}" alt=""></div>
+                                    <div class="swiper-slide"><img src="{% static '/order/food/握壽司-納豆.jpg' %}" alt=""></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-1" ></div>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-slide change-slide">
+            <div class="container-fluid">
+                <div class="title">
+                    <img src="{% static '/food/丼飯.png' %}">
+                </div>
+                <div class="row">
+                    <div class="col-1"></div>
+                    <div class="col-3 d-flex align-items-center" style="height: 400px;">
+                        <div class='swiper-top' style="width: 95%; height: 95%;">
+                            <div class="swiper mySwiper5 swiper-img">
+                                <div class="swiper-wrapper" >
+                                    <div class="swiper-slide"><img src="{% static '/order/food/丼飯-親子.jpg' %}" alt=""></div>
+                                    <div class="swiper-slide"><img src="{% static '/order/food/丼飯-豬排.jpg' %}" alt=""></div>
+                                    <div class="swiper-slide"><img src="{% static '/order/food/丼飯-鮭魚.jpg' %}" alt=""></div>
+                                    <div class="swiper-slide"><img src="{% static '/order/food/丼飯-海景.jpg' %}" alt=""></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-7 d-flex align-items-center justify-content-center" >
+                        <div class='swiper-top' style="width: 95%; height: 95%;">
+                            <div class="swiper mySwiper6 swiper-info">
+                                <div class="swiper-wrapper swiper-info-text">
+                                    <div class="swiper-slide bg-2" >
+                                        <div>
+                                            <h2>經典親子丼飯 ($200)</h2>
+                                            <ul>
+                                                深受食客喜愛的家常美食。這道料理結合了嫩滑的雞肉、鮮美的雞蛋與柔軟的米飯。
+                                            </ul>
+                                            <ul>
+                                                <li>口感：雞肉鮮嫩多汁，搭配蛋液的綿密質地，使得每一口都溫潤可口。</li>
+                                                <li>風味：雞肉和雞蛋的結合，透過特製醬汁調味，散發出甜鹹適中的風味。</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide bg-1">
+                                        <div>
+                                            <h2>卡茲豬排丼飯 ($280)</h2>
+                                            <ul>
+                                                這道丼飯結合了酥脆的豬排、滑嫩的蛋液和香軟的米飯。
+                                            </ul>
+                                            <ul>
+                                                <li>口感：外皮金黃酥脆，內裡多汁柔軟，與蛋液和米飯搭配後，形成豐富的層次感。</li>
+                                                <li>風味：豬排搭配特製的甜鹹醬汁，滋味濃郁，蛋液則增添了細膩的風味。</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide bg-2">
+                                        <div>
+                                            <h2>鮭魚天堂丼飯 ($260)</h2>
+                                            <ul>
+                                                豪華且令人垂涎的料理，結合了新鮮的鮭魚刺身、魚卵與豐富的配料，帶給食客極致的味覺享受。
+                                            </ul>
+                                            <ul>
+                                                <li>口感：鮭魚刺身細膩柔軟，搭配Q彈的魚卵和香軟的米飯，每一口都充滿層次和鮮味。</li>
+                                                <li>風味：擁有天然的油脂和微甜的鮮美，魚卵的鹹香為其增添豐富的海洋氣息，整體滋味平衡又充滿深度。</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide bg-1">
+                                        <div>
+                                            <h2>無敵海景丼飯 ($350)</h2>
+                                            <ul>
+                                                匯聚多種頂級海鮮的奢華料理。這道丼飯結合了新鮮的鮭魚刺身、甜蝦、鰻魚、北寄貝、魚卵及其他海鮮配料，讓您一次品嚐到多種海洋的珍饈。
+                                            </ul>
+                                            <ul>
+                                                <li>口感：擁有多樣的口感層次，每一口都是驚喜。</li>
+                                                <li>風味：融合了多種海鮮的鮮美，帶來豐富而深邃的味道。</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-button-next"></div>
+                                <div class="swiper-button-prev"></div>
+                                <div class="swiper-pagination"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-1"></div>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-slide change-slide">
+            <div class="container-fluid">
+                <div class="title">
+                    <img src="{% static '/food/拉麵.png' %}">
+                </div>
+                <div class="row">
+                    <div class="col-1"></div>
+                    <div class="col-7 d-flex align-items-center justify-content-center" >
+                        <div class='swiper-top' style="width: 95%; height: 95%;">
+                            <div class="swiper mySwiper8 swiper-info">
+                                <div class="swiper-wrapper swiper-info-text">
+                                    <div class="swiper-slide bg-2" >
+                                        <div>
+                                            <h2>豚骨白湯拉麵 ($190)</h2>
+                                            <ul>
+                                                拉麵以濃郁的豬骨湯頭和彈牙的麵條著稱，帶來令人無法抗拒的溫暖滋味。
+                                            </ul>
+                                            <ul>
+                                                <li>口感：湯頭濃厚順滑，麵條Q彈有勁，搭配香嫩的叉燒肉和溫潤的溏心蛋。</li>
+                                                <li>風味：豬骨經長時間熬煮，釋放出豐富的膠原蛋白與鮮甜的滋味，湯頭呈現出乳白色，帶有濃郁的香氣。</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide bg-1">
+                                        <div>
+                                            <h2>地獄札幌拉麵 ($210)</h2>
+                                            <ul>
+                                                專為熱愛辣味的食客設計的獨特料理，為您帶來火熱刺激的味覺體驗。
+                                            </ul>
+                                            <ul>
+                                                <li>口感：湯頭濃厚，搭配充滿彈性的麵條，豐富的配料如叉燒、溏心蛋和辣味豆芽，讓每一口都充滿驚喜與挑戰。</li>
+                                                <li>風味：湯頭以濃郁的味噌為基底，加入辛辣的特製辣醬，帶來深層次的辣味與鹹香，伴隨著豐富的香氣和微甜的餘韻。</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide bg-2">
+                                        <div>
+                                            <h2>特製信長拉麵 ($280)</h2>
+                                            <ul>
+                                                豐富滋味和精緻配料著稱的料理，靈感來自戰國時代的勇者精神。這道拉麵結合了濃厚的豚骨湯頭與精選配料。
+                                            </ul>
+                                            <ul>
+                                                <li>口感：厚切叉燒、特製溏心蛋和竹筍，搭配太極揉麵製成的麵條Q彈有勁，讓您感受有如仙境。</li>
+                                                <li>風味：特製信長拉麵的湯頭經熬製七七四十九天而成，加入香醇的大蒜油與秘製調料，帶來濃香四溢的味覺體驗，讓人彷彿置身於戰國時代的豪情之中。</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-button-next"></div>
+                                <div class="swiper-button-prev"></div>
+                                <div class="swiper-pagination"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3 d-flex align-items-center" style="height: 400px;">
+                        <div class='swiper-top' style="width: 95%; height: 95%;">
+                            <div class="swiper mySwiper7 swiper-img">
+                                <div class="swiper-wrapper" >
+                                    <div class="swiper-slide"><img src="{% static '/order/food/拉麵-豚骨.jpg' %}" alt=""></div>
+                                    <div class="swiper-slide"><img src="{% static '/order/food/拉麵-地獄.jpg' %}" alt=""></div>
+                                    <div class="swiper-slide"><img src="{% static '/order/food/拉麵-特製.jpg' %}" alt=""></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-1"></div>
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+
+    <div>
+        <footer class="footer">
+            <img src="{% static '/home/other/logo3.jpg' %}">
+            <p >© 2024 暮秋. 版權所有。</p>
+        </footer>
+    </div>
+
+
+  <!-- Swiper JS -->  
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Initialize Swiper -->
+  <script>
+    var swiper = new Swiper(".mySwiper-l", {
+        speed: 2000, // 轉場動畫時間設置為 1 秒（1000 毫秒）
+        direction: "vertical",
+        pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+        },
+        autoplay: {
+            delay: 2000,
+            disableOnInteraction: false,
+            },
+        });
+
+        // 停止自动播放
+        swiper.el.addEventListener('mouseenter', function () {
+            swiper.autoplay.stop();
+        });
+
+        // 恢复自动播放
+        swiper.el.addEventListener('mouseleave', function () {
+            swiper.autoplay.start();
+        });
+
+
+    var swiper1 = new Swiper(".mySwiper1", {
+      effect: "cards",
+      cardsEffect: {
+            rotate: 45, // 卡片旋轉角度設置為 45 度
+        },
+        cardsEffect: {
+            perSlideOffset: 10, // 每張卡片之間的偏移量設置為 10px
+        },
+      autoplay: {
+        delay: 2500,
+        disableOnInteraction: false,
+        },
+      grabCursor: true,       //滑鼠抓取圖示
+      slidesPerView: 1,       //指定一次只顯示一個幻燈片
+    });
+    
+    var swiper2 = new Swiper(".mySwiper2", {
+      
+      effect: "fade",
+      spaceBetween: 30,
+      grabCursor: true,       //滑鼠抓取圖示
+      slidesPerView: 1,       //指定一次只顯示一個幻燈片
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+    });
+
+    // Synchronize the slides
+    swiper1.on('slideChange', function () {
+            swiper2.slideTo(swiper1.realIndex);
+        });
+
+    swiper2.on('slideChange', function () {
+            swiper1.slideTo(swiper2.realIndex);
+        });
+    </script>
+<!-- ----------------------------------------------------------------------------------------------------- -->
+    <script>
+
+    var swiper3 = new Swiper(".mySwiper3", {
+        effect: "cards",
+        cardsEffect: {
+                rotate: 45, // 卡片旋轉角度設置為 45 度
+            },
+            cardsEffect: {
+                perSlideOffset: 10, // 每張卡片之間的偏移量設置為 10px
+            },
+        autoplay: {
+            delay: 2500,
+            disableOnInteraction: false,
+            },
+        grabCursor: true,       //滑鼠抓取圖示
+        slidesPerView: 1,       //指定一次只顯示一個幻燈片
+        });
+    
+    var swiper4 = new Swiper(".mySwiper4", {
+      
+      effect: "fade",
+      spaceBetween: 30,
+      grabCursor: true,       //滑鼠抓取圖示
+      slidesPerView: 1,       //指定一次只顯示一個幻燈片
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+    });
+
+    // Synchronize the slides
+    swiper3.on('slideChange', function () {
+            swiper4.slideTo(swiper3.realIndex);
+        });
+
+    swiper4.on('slideChange', function () {
+            swiper3.slideTo(swiper4.realIndex);
+        });
+    </script>
+    <!-- ----------------------------------------------------------------------------------------------------- -->
+    <script>
+        
+    var swiper5 = new Swiper(".mySwiper5", {
+        effect: "cards",
+        cardsEffect: {
+                rotate: 45, // 卡片旋轉角度設置為 45 度
+            },
+            cardsEffect: {
+                perSlideOffset: 10, // 每張卡片之間的偏移量設置為 10px
+            },
+        autoplay: {
+            delay: 2500,
+            disableOnInteraction: false,
+            },
+        grabCursor: true,       //滑鼠抓取圖示
+        slidesPerView: 1,       //指定一次只顯示一個幻燈片
+        });
+    
+    var swiper6 = new Swiper(".mySwiper6", {
+      
+      effect: "fade",
+      spaceBetween: 30,
+      grabCursor: true,       //滑鼠抓取圖示
+      slidesPerView: 1,       //指定一次只顯示一個幻燈片
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+    });
+
+    // Synchronize the slides
+    swiper5.on('slideChange', function () {
+            swiper6.slideTo(swiper5.realIndex);
+        });
+
+    swiper6.on('slideChange', function () {
+            swiper5.slideTo(swiper6.realIndex);
+        });
+    </script>
+       <!-- ----------------------------------------------------------------------------------------------------- -->
+    <script>
+    
+    var swiper7 = new Swiper(".mySwiper7", {
+        effect: "cards",
+        cardsEffect: {
+                rotate: 45, // 卡片旋轉角度設置為 45 度
+            },
+            cardsEffect: {
+                perSlideOffset: 10, // 每張卡片之間的偏移量設置為 10px
+            },
+        autoplay: {
+            delay: 2500,
+            disableOnInteraction: false,
+            },
+        grabCursor: true,       //滑鼠抓取圖示
+        slidesPerView: 1,       //指定一次只顯示一個幻燈片
+        });
+    
+    var swiper8 = new Swiper(".mySwiper8", {
+        
+        effect: "fade",
+        spaceBetween: 30,
+        grabCursor: true,       //滑鼠抓取圖示
+        slidesPerView: 1,       //指定一次只顯示一個幻燈片
+        navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+        },
+        pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+        },
+    });
+
+    // Synchronize the slides
+    swiper7.on('slideChange', function () {
+            swiper8.slideTo(swiper7.realIndex);
+        });
+
+    swiper8.on('slideChange', function () {
+            swiper7.slideTo(swiper8.realIndex);
+        });
+    </script>
+</body>
+
+</html>

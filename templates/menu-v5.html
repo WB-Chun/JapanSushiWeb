@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>外帶點餐</title>
+    {% load static %}
+    <!-- Bootstrap 5 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static '/css/style_menu.css' %}" type="text/css" />
+    <link rel="stylesheet" href="{% static '/css/style_Functionbar.css' %}" type="text/css" />
+    
+    <style>
+        /*中心大標題*/
+        .title-jumbotron {
+            position: relative;
+            height: 400px;
+            min-height: 500px;
+            /* background-size: cover;
+            background-position: center; */
+            background-image: url('{% static "/order/菜單-封面.jpg" %}');
+            background-repeat: no-repeat;
+        }
+        
+        .bg-img {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('{% static "/order/菜單-底圖.jpg" %}');
+            background-repeat: no-repeat;
+            background-position: center; /* 圖片置中 */
+            background-size: cover; /* 確保圖片覆蓋整個背景且保持比例 */
+            z-index: -1;
+        }
+        
+        .bg-img::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.6); /* 白色半透明疊加層，透明度 50% */
+            z-index: 1; /* 疊加層在背景上方 */
+        }
+
+    </style>
+</head>
+<body>
+    <div class="bg-img"></div>
+    {% include "FunctionBar.html" %}
+
+    <div class="main">
+        <div class="title-jumbotron jumbotron-fluid text-center"></div>
+        
+        <!-- 商品項目 -->
+        <div>
+            <div class="container-fluid category-container d-flex align-items-center justify-content-center;">
+                <div class="row justify-content-center align-items: center; w-100">
+                    {% for category_item in category %}
+                    <div class="col-1">
+                        <div class="category-item" onclick="showSet('set{{ category_item.id }}')">{{ category_item.category_name }}</div>
+                    </div>
+                    {% endfor %}
+                    <div class="col-1">
+                        <div class="category-item show-all" onclick="showSet('all')">Show All</div>
+                    </div>
+                </div>
+            </div>
+            <!-- 商品卡 -->
+            <div class="container">
+                <div class="row" id="card-container">
+                    <!-- 動態生成的卡片將插入此處 -->
+                </div>
+            </div>
+            <div style="height: 300px;"></div>
+        </div>
+
+        <!-- 底部購物車 -->
+        <div class="footer">
+            <div class="row h-100">
+                <div class="col d-flex align-items-center justify-content-end me-5">
+                    <div id="total_menu_money" class="me-5">
+                        餐點目前全額：$0
+                    </div>
+                    <div>
+                        <button id="go_to_checkout" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal_checkout_check">查看購物車</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 模態框：通用的商品選購 -->
+        <div class="modal fade" id="itemDetailModal" tabindex="-1" aria-labelledby="itemDetailModalLabel" aria-hidden="true">       <!--modal fade:淡出的動畫，tabindex="-1":表示模態框不能通過 Tab 鍵獲取焦點，aria-hidden="true":初始設置為 true，表示這個模態框在打開之前是隱藏的-->
+            <div class="modal-dialog">
+                <div class="modal-content modal_food">
+                    <div class="modal-header">
+                        <h5 id="itemDetailModalLabel" class="modal-title">商品名稱</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <img id="itemDetailImage" src="" alt="" class="img-fluid">
+                        </div>
+                        <p id="itemDetailDescription">商品描述</p>
+                        <p id="itemDetailPrice" data-price="0">$0</p>
+                            
+                        <!-- 加購選項 -->
+                        <div class="mt-3" id="additionalOptionsContainer">
+                            <h6>加購選項：</h6>
+                            <!-- 動態生成的加購選項將插入此處 -->
+                        </div>
+
+                        <div class="input-group mb-3 mt-3">
+                            <button class="btn btn-outline-secondary" type="button" onclick="decreaseQuantity()">-</button>
+                            <input type="text" class="form-control" id="itemQuantity" value="1" readonly>
+                            <button class="btn btn-outline-secondary" type="button" onclick="increaseQuantity()">+</button>
+                        </div>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-between">
+                        <div style="text-align: left;">
+                            <p id="itemTotalMoney">total$：0$</p>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-primary" onclick="addToCart()">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 模態框: 購物車 -->
+    <div class="modal fade" id="exampleModal_checkout_check" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg"> <!-- 使用大尺寸模態框以容納更多內容 -->
+            <div class="modal-content modal_content_car">
+                <div class="modal-header">
+                    <h5 class="modal-title">購物車</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body modal_body_car" id="checkout_checkModalBody">
+                    <!-- 購物車項目將插入此處 -->
+
+                </div>
+                <div class="modal-footer d-flex justify-content-between">
+                    <div style="text-align: left;">
+                        <p id="total_money_car">餐點目前全額：$0</p>
+                    </div>
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal_checkout_send">確認餐點~!!</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+	<!-- 模態框: 購物車_確認單 -->
+<div class="modal fade" id="exampleModal_checkout_send" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg"> <!-- 使用大尺寸模態框以容納更多內容 -->
+        <div class="modal-content modal_body_send">
+            <div class="modal-header">
+                <h5 class="modal-title">確認訂單</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body modal_body_send" id="checkout_send_ModalBody">
+                <div id="orderSummary">
+                    <!-- 顯示購物車商品清單的區域 -->
+					<div id="orderSummary">
+						<ul id="orderSummaryList" class="list-group"></ul>
+					</div>
+                </div>
+                <hr>
+                <h6>選擇付款方式：</h6>
+                <div>
+                    <input type="radio" id="cashPayment" name="paymentMethod" value="cash" checked>
+                    <label for="cashPayment">付現金</label><br>
+                    <input type="radio" id="onlinePayment" name="paymentMethod" value="online">
+                    <label for="onlinePayment">線上刷卡</label>
+                </div>
+                <div id="paymentInput" style="display:none; margin-top:10px;">
+                    <label for="paymentInfo">請輸入信用卡資訊：</label>
+                    <input type="text" id="paymentInfo" class="form-control" placeholder="信用卡號碼" maxlength="16">
+                </div>
+            </div>
+            <div class="modal-footer d-flex justify-content-between">
+                <button type="button" class="btn btn-success" onclick="checkout_send()">送出訂單~!!</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+	function updateOrderSummary() {
+		const orderSummaryList = document.getElementById("orderSummaryList");
+		orderSummaryList.innerHTML = ""; // 清空先前的內容
+	
+		cartItems.forEach(item => {
+			const itemElement = document.createElement("li");
+			itemElement.classList.add("list-group-item");
+			itemElement.innerHTML = `
+				<strong>${item.product}</strong> x${item.quantity} - $${item.total_item} <br>
+				${item.options.length > 0 ? "<em>加購選項:</em> <br>" + item.options.map(option => `- ${option.name} +$${option.price}`).join("<br>") : ""}
+			`;
+			orderSummaryList.appendChild(itemElement);
+		});
+	
+		// 顯示總金額
+		const totalElement = document.createElement("li");
+		totalElement.classList.add("list-group-item", "fw-bold");
+		totalElement.innerText = `總金額: $${total_money}`;
+		orderSummaryList.appendChild(totalElement);
+	}
+
+	document.addEventListener("DOMContentLoaded", function () {
+		const checkoutSendModal = document.getElementById("exampleModal_checkout_send");
+		checkoutSendModal.addEventListener("show.bs.modal", updateOrderSummary);
+	});
+</script>
+
+    
+
+    <!-- Toast 通知: 添加成功 -->
+    <div class="toast-container position-fixed top-50 start-50 translate-middle-x translate-middle-y">
+        <div id="addToCartToast" class="toast align-items-center text-bg-success" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="1500" style="width: 100%;"> 
+            <div class="d-flex">
+                <div class="toast-body">
+                    添加成功！
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 資料結構
+        const cardData = {
+            {% for category_item in category %}
+                set{{ category_item.id }}: [
+                    {% for item in products_with_options %}
+                        {% if item.product.category_id == category_item.id %}
+                        {
+                            id: {{ item.product.id }},
+                            product: "{{ item.product.product_name }}",
+                            description: "{{ item.product.description }}",
+                            imgSrc: "{{ item.product.product_img }}",
+                            price: {{ item.product.product_price }},
+                            options: [
+                                {% for option in item.options %}
+                                    { name: "{{ option.upgrade_name }}", price: {{ option.upgrade_price }} },
+                                {% endfor %}
+                            ]
+                        },
+                        {% endif %}
+                    {% endfor %}
+                ],
+            {% endfor %}
+        };
+        
+        
+
+        let currentItem = null; // 當前選擇的商品
+        let total_money = 0;
+        let cartItems = [];  // 用來儲存所有購物車的項目
+
+        // 動態生成卡片
+        function generateCards(set) {
+            const container = document.getElementById('card-container');
+            container.innerHTML = ''; // 清除之前的卡片
+        
+            let data = [];
+            if (set === 'all') {
+                data = Object.values(cardData).flat();
+            } else {
+                data = cardData[set];
+            }
+            data.forEach(item => {
+                if (item && item.product) {  // 檢查 item 是否為有效物件
+                    const card = document.createElement('div');
+                    const staticBaseUrl = "{% static '/order/food/' %}"
+                    card.classList.add('col-md-3', set);
+                    card.innerHTML = `
+                        <div class="card mb-4">
+                            <img src="${staticBaseUrl}${item.imgSrc}" class="card-img-top" alt="${item.product}" onclick="openModal('${item.id}')">
+                            <div class="card-body">
+                                <h5 class="card-title">${item.product}</h5>
+                                <p class="card-text">${item.description}</p>
+                                <p class="card-money">$${item.price}</p>
+                            </div>
+                        </div>  
+                    `;
+                    container.appendChild(card);
+                }
+            });
+        }
+
+        // 顯示特定集合的卡片
+        function showSet(set) {
+            if (set === 'all') {
+                generateCards('all');
+            } else {
+                generateCards(set);
+            }
+        }
+
+        // 開啟模態框並設定內容
+        function openModal(itemId) {
+            const staticBaseUrl = "{% static '/order/food/' %}"
+            const allSets = Object.values(cardData).flat();
+            currentItem = allSets.find(item => item.id === Number(itemId));         //將 itemId 轉換為數字
+            
+
+            if (currentItem) {
+                document.getElementById('itemDetailModalLabel').innerText = currentItem.product;
+                document.getElementById('itemDetailImage').src = staticBaseUrl + currentItem.imgSrc;     // 組合完整圖片路徑
+                
+                document.getElementById('itemDetailDescription').innerText = currentItem.description;
+                const priceElement = document.getElementById('itemDetailPrice');
+                priceElement.innerText = `$${currentItem.price}`;
+                priceElement.dataset.price = currentItem.price;
+                document.getElementById('itemQuantity').value = 1;
+
+                // 動態生成加購選項
+                const optionsContainer = document.getElementById('additionalOptionsContainer');
+                const optionsHTML = currentItem.options.map((option, index) => {
+                    let extraDiv = '';
+                
+                    if (option.name === 'A套餐') { // 替換為你的特定食物名稱
+                        extraDiv = '<span style="margin-left:50px">(內容為：40援飲品+小點)</span>';
+                    } else if (option.name === 'B套餐') { // 替換為另一種特定食物名稱
+                        extraDiv = '<span  style="margin-left:50px">(內容為：40援飲品+小點+點心)</span>';
+                    } else if (option.name === 'C套餐') { // 替換為另一種特定食物名稱
+                        extraDiv = '<span  style="margin-left:40px">(內容為：酒無限暢飲+小點+點心)</span>';
+                    }
+                
+                    return `
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="additionalOption" value="${option.name}" id="option${index}" data-additional-price="${option.price}">
+                            <label class="form-check-label" for="option${index}">
+                                ${option.name} +$${option.price} ${extraDiv}
+                            </label>
+                        </div>
+                    `;
+                }).join('');
+                optionsContainer.innerHTML = `
+                    <h6>加購選項：</h6>
+                    ${optionsHTML}
+                `;
+                // 設定初始總金額
+                updateTotalMoney();
+                // 顯示模態框
+                const itemDetailModal = new bootstrap.Modal(document.getElementById('itemDetailModal'));
+                itemDetailModal.show();
+            }
+        }
+
+        // 增加數量
+        function increaseQuantity() {
+            const quantity = document.getElementById('itemQuantity');
+            quantity.value = parseInt(quantity.value) + 1;
+            updateTotalMoney();
+        }
+
+        // 減少數量
+        function decreaseQuantity() {
+            const quantity = document.getElementById('itemQuantity');
+            if (parseInt(quantity.value) > 1) {
+                quantity.value = parseInt(quantity.value) - 1;
+                updateTotalMoney();
+            }
+        }
+
+        // 更新總金額
+        function updateTotalMoney() {
+            if (!currentItem) return;
+
+            const quantity = parseInt(document.getElementById('itemQuantity').value);
+            const basePrice = parseFloat(document.getElementById('itemDetailPrice').dataset.price);
+            let total = basePrice * quantity;
+
+            // 計算加購選項的總價
+            currentItem.options.forEach((option, index) => {
+                const checkbox = document.getElementById(`option${index}`);
+                if (checkbox && checkbox.checked) {
+                    const additionalPrice = parseFloat(checkbox.dataset.additionalPrice);
+                    total += additionalPrice * quantity; // 假設加購選項的價格按數量計算
+                }
+            });
+
+            document.getElementById('itemTotalMoney').innerText = `total$：${total}$`;
+        }
+
+        // 添加到購物車
+        function addToCart() {
+            if (!currentItem) return;
+
+            const quantity = parseInt(document.getElementById('itemQuantity').value);
+            let total_item = currentItem.price * quantity;
+            let selectedOptions = [];
+
+            // 收集選擇的加購選項
+            currentItem.options.forEach((option, index) => {
+                const checkbox = document.getElementById(`option${index}`);
+                if (checkbox && checkbox.checked) {
+                    selectedOptions.push({
+                        name: option.name,
+                        price: option.price
+                    });
+                    total_item += option.price * quantity; // 加上加購選項的價格
+                }
+            });
+
+            // 合併檢查：檢查購物車中是否已經有相同的項目
+            const existingItem = cartItems.find(
+                item => item.product === currentItem.product && JSON.stringify(item.options) === JSON.stringify(selectedOptions)
+            );
+
+            if (existingItem) {
+                // 如果已經存在相同項目，增加數量和更新總價
+                existingItem.quantity += quantity;
+                existingItem.total_item += total_item;
+                total_money += total_item;
+
+                // 更新現有項目的顯示內容
+                const itemElement = document.getElementById(existingItem.itemId);
+                if (itemElement) {
+                    itemElement.querySelector(".cart-quantity").innerText = `Quantity: ${existingItem.quantity}`;
+                    itemElement.querySelector(".cart-total").innerText = `Total: $${existingItem.total_item}`;
+
+                    // 更新刪除按鈕的 onclick 事件，以反映正確的 total_item 值
+                    itemElement.querySelector(".btn-danger").setAttribute("onclick", `removeCartItem('${existingItem.itemId}', ${existingItem.total_item})`);
+                }
+            } else {
+                // 如果是新項目，創建一個唯一的 id 給每個 cart item
+                const itemId = `cart-item-${Date.now()}`;
+
+                // 將當前項目資料加入 cartItems 陣列
+                cartItems.push({
+                    itemId: itemId,
+                    product: currentItem.product,
+                    price: currentItem.price,
+                    quantity: quantity,
+                    options: selectedOptions,
+                    total_item: total_item
+                });
+
+                // 累加總金額
+                total_money += total_item;
+
+                // 創建加購選項的描述
+                let optionsHTML = '';
+                if (selectedOptions.length > 0) {
+                    optionsHTML = '<ul>';
+                    selectedOptions.forEach(option => {
+                        optionsHTML += `<li>${option.name} +$${option.price}</li>`;
+                    });
+                    optionsHTML += '</ul>';
+                }
+
+                // 創建一個新的元素來顯示每個產品的資訊
+                const itemHTML = `
+                    <div id="${itemId}" class="cart-item">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-9">
+                                    <h5>${currentItem.product}</h5>
+                                    ${optionsHTML}
+                                        
+                                    <p class="cart-quantity">Quantity: ${quantity}</p>
+                                    <p class="cart-total">Total: $${total_item}</p>
+                                </div>
+                                <div class="col-3 d-flex justify-content-center align-items-center">
+                                    <button class="btn btn-danger btn-sm mt-2" onclick="removeCartItem('${itemId}', ${total_item})">刪除</button>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                `;
+
+                // 將新的元素追加到 exampleModal_checkout_check 的 modal-body 中
+                document.getElementById('checkout_checkModalBody').insertAdjacentHTML('beforeend', itemHTML);
+            }
+
+            // 更新總金額顯示
+            document.getElementById("total_money_car").innerText = `餐點目前全額：$${total_money}`;
+            document.getElementById("total_menu_money").innerText = `餐點目前全額：$${total_money}`;
+
+            // 顯示 Toast 提示
+            const toastElement = new bootstrap.Toast(document.getElementById('addToCartToast'));
+            toastElement.show();
+
+            // 關閉商品詳細資訊模態框
+            const itemDetailModal = bootstrap.Modal.getInstance(document.getElementById('itemDetailModal'));
+            itemDetailModal.hide();
+        }
+
+
+
+        // 移除購物車項目
+        function removeCartItem(itemId, itemTotal) {
+            const item = document.getElementById(itemId);
+            if (item) {
+                item.remove();
+                total_money -= itemTotal;  // 減去被刪除項目的總金額
+                document.getElementById("total_money_car").innerText = `餐點目前全額：$${total_money}`;
+                document.getElementById("total_menu_money").innerText = `餐點目前全額：$${total_money}`;
+
+                // 從 cartItems 陣列中移除該項目
+                cartItems = cartItems.filter(cartItem => cartItem.itemId !== itemId);
+            }
+        }
+
+		// 監控付款方式選擇，顯示或隱藏支付資訊輸入框
+		document.getElementById("onlinePayment").addEventListener("change", function () {
+			document.getElementById("paymentInput").style.display = "block";
+		});
+
+		document.getElementById("cashPayment").addEventListener("change", function () {
+			document.getElementById("paymentInput").style.display = "none";
+		});
+
+        const login_ornot = {{ user.is_authenticated|yesno:"true,false" }};         //將登入狀態 (request.user.is_authenticated) 傳遞給模板
+        // 結帳功能
+        function checkout_send() {
+			if (login_ornot) {
+				if (cartItems.length === 0) {
+					alert('購物車是空的！');
+					return;
+				}
+		
+				// 獲取支付方式和支付資訊
+				const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+				const paymentInfo = paymentMethod === 'online' ? document.getElementById("paymentInfo").value : null;
+		
+				const payload = {
+					cartItems: cartItems.map(item => ({
+						product_name: item.product, // 使用 product 名稱
+						quantity: item.quantity,
+						options: item.options,      // 選擇的升級選項
+						total_item: item.total_item // 該項目的總價
+					})),
+					total_money: total_money,
+					payment_method: paymentMethod,
+					payment_info: paymentInfo
+				};
+		
+				console.log("即將發送的購物車內容：", payload);
+		
+				fetch('/checkout/', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+						'X-CSRFToken': '{{ csrf_token }}'
+					},
+					body: JSON.stringify(payload)
+				})
+				.then(response => {
+					if (response.ok) {
+						alert('結帳成功！');
+						// 清空購物車
+						cartItems = [];
+						total_money = 0;
+						document.getElementById("total_money_car").innerText = `餐點目前全額：$0`;
+						document.getElementById("total_menu_money").innerText = `餐點目前全額：$0`;
+						document.getElementById('exampleModal_checkout_check').innerHTML = '';
+						// 關閉模態框並移除背景效果
+						const modalElement = document.getElementById('exampleModal_checkout_check');
+						const modalInstance = bootstrap.Modal.getInstance(modalElement);
+						modalInstance.hide();  // 使用 Bootstrap 的 hide() 方法
+						location.reload(); // 在結帳成功後重新加載頁面
+					} else {
+						alert('結帳失敗1，請重試！');
+					}
+				})
+				.catch(error => {
+					console.error('Error:', error);
+					alert('結帳失敗2，請重試！');
+				});
+			} else {
+				alert('請先登入會員~~!!');
+			}
+		}
+        
+        // 初始化頁面顯示所有卡片
+        document.addEventListener('DOMContentLoaded', function() {
+            showSet('all');
+        });
+
+        // 監聽加購選項的變化以更新總金額
+        document.getElementById('itemDetailModal').addEventListener('change', function(event) {
+            if (event.target.classList.contains('form-check-input')) {
+                updateTotalMoney();
+            }
+        });
+    </script>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

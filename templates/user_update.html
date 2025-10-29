@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改會員資料</title>
+    {% load static %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<style>
+    .bg-img2 {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+        background-repeat: no-repeat;
+        background-position: center; /* 圖片置中 */
+        background-size: cover; /* 確保圖片覆蓋整個背景且保持比例 */
+        background-image: url('{% static "/adderuser/日現背景圖.jpg" %}');
+        z-index: -2;
+    }
+
+    .bg-img2::after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.3); /* 白色半透明疊加層，透明度 50% */
+        z-index: 1; /* 疊加層在背景上方 */
+    }
+
+
+
+    .container{
+        width: 600px;
+        padding: 30px;
+        border: 5px solid #ccc;
+        border-radius: 15px;
+        background-color: #f9f9f9;
+    }
+
+    @keyframes shake {
+        0% { transform: translateX(0); }
+        25% { transform: translateX(-10px); }
+        50% { transform: translateX(10px); }
+        75% { transform: translateX(-10px); }
+        100% { transform: translateX(0); }
+    }
+    .shake {
+        animation: shake 0.4s ease;
+    }
+    .error-message {
+        color: red;
+        font-size: 0.9rem;
+        margin-top: 5px;
+    }
+</style>
+<body>
+    <div class="bg-img2"></div>
+    <div class="container mt-5">
+        <h2 class="text-center">修改會員資料</h2>
+        <form action="/userupdate/" method="post" id="updateForm">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="email" class="form-label">電子郵件</label>
+                <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}" required>
+            </div>
+            {% if user_detail %}
+            <div class="mb-3">
+                <label for="phone" class="form-label">電話號碼</label>
+                <input type="text" class="form-control" id="phone" name="phone" value="{{ user_detail.phone_number }}" required>
+            </div>
+            {% endif %}
+            <div class="mb-3">
+                <label for="password" class="form-label">密碼</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            <div class="mb-3">
+                <label for="passwordTwice" class="form-label">密碼-再次確認</label>
+                <input type="password" class="form-control" id="passwordTwice" name="passwordTwice" required>
+                <div id="error-message" class="error-message" style="display: none;">密碼不相符，請重新輸入。</div>
+            </div>
+            <div class="footer_button d-flex justify-content-between">              <!--使用了 d-flex 和 justify-content-between 類來讓內部的內容一左一右對齊。-->
+                <div>
+                    <a href="/home/" class="btn btn-secondary">回主頁面</a>
+                </div>
+                <div>
+                    <button type="reset" class="btn btn-success">回復預設</button>
+                    <button type="submit" class="btn btn-primary">更新資料</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    {% if messages %}
+    <script>
+        {% for message in messages %}
+        alert("{{ message }}");
+        {% endfor %}
+    </script>
+    {% endif %}
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const form = document.getElementById("updateForm");
+            const password = document.getElementById("password");
+            const passwordTwice = document.getElementById("passwordTwice");
+            const errorMessage = document.getElementById("error-message");
+
+            form.addEventListener("submit", function(event) {
+                if (password.value !== passwordTwice.value) {
+                    event.preventDefault(); // 阻止表單提交
+                    errorMessage.style.display = "block"; // 顯示錯誤訊息
+                    passwordTwice.classList.add("shake"); // 加入震盪效果
+                    passwordTwice.focus();
+
+                    // 在動畫結束後移除震盪效果
+                    passwordTwice.addEventListener("animationend", function() {
+                        passwordTwice.classList.remove("shake");
+                    }, { once: true });
+                } else {
+                    errorMessage.style.display = "none"; // 隱藏錯誤訊息
+                }
+            });
+        });
+    </script>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const form = document.getElementById("updateForm");
+            const password = document.getElementById("password");
+            const passwordTwice = document.getElementById("passwordTwice");
+            const errorMessage = document.getElementById("error-message");
+    
+            form.addEventListener("submit", function(event) {
+                event.preventDefault(); // 阻止默認提交行為
+    
+                // 密碼匹配檢查
+                if (password.value !== passwordTwice.value) {
+                    errorMessage.style.display = "block";
+                    passwordTwice.classList.add("shake");
+                    passwordTwice.focus();
+                    passwordTwice.addEventListener("animationend", function() {
+                        passwordTwice.classList.remove("shake");
+                    }, { once: true });
+                    return;
+                } else {
+                    errorMessage.style.display = "none";
+                }
+    
+                // 使用 Fetch API 提交表單資料
+                const formData = new FormData(form);
+                fetch("/userupdate/", {
+                    method: "POST",
+                    body: formData,
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert("會員資料已更新，2秒後導回首頁"); // 提示訊息
+                        setTimeout(() => {
+                            window.location.href = "/home/"; // 延遲後跳轉
+                        }, 2000);
+                    } else {
+                        alert("資料更新失敗，請重試");
+                    }
+                })
+                .catch(error => console.error("Error:", error));
+            });
+        });
+    </script>
+    
+</body>
+</html>
+

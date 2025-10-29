@@ -1,0 +1,3 @@
+# 排除所有 Python 編譯快取資料夾
+__pycache__/
+**/__pycache__/

@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>暮秋の日本料理</title>
+    {% load static %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Add the slick-theme.css if you want default styling -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <!-- Add the slick-theme.css if you want default styling -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+
+    <link rel="stylesheet" href="{% static '/css/style_home.css' %}" type="text/css" />
+    <link rel="stylesheet" href="{% static '/css/style_Functionbar.css' %}" type="text/css" />
+
+    <style>
+        .bg-img {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('{% static '/home/秋扇.jpg' %}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: -1;
+        }
+    </style>
+</head>
+
+<!-- 登入頁面的動畫 -->
+<!-- Loading overlay -->
+<div class="loading-overlay" id="loadingOverlay">
+    <div class="spinner-container">
+        <!-- Original SVG Animation -->
+        <svg width="150" height="150" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="40" stroke="#3498db" stroke-width="5" fill="none" />
+            <circle cx="50" cy="50" r="40" stroke="#e74c3c" stroke-width="5" fill="none" stroke-dasharray="251" stroke-dashoffset="251">
+                <animate attributeName="stroke-dashoffset" from="251" to="0" dur="2s" repeatCount="indefinite" />
+            </circle>
+        </svg>
+        <!-- Added SVG Image in the center -->
+        <img src="{% static '/home/other/loading.png' %}" alt="Loading..." width="100" height="100">
+    </div>
+</div>
+
+<!-- 登入頁面的動畫 -->
+<script>
+    // 檢查 sessionStorage 是否標記了第一次進入
+    window.onload = function() {
+        if (!sessionStorage.getItem('pageVisited')) {
+            // 如果是第一次進入，顯示讀取動畫並標記 sessionStorage
+            setTimeout(function() {
+                document.getElementById('loadingOverlay').style.display = 'none';
+                sessionStorage.setItem('pageVisited', 'true');
+            }, 2000); // 延遲 2 秒後隱藏
+        } else {
+            // 如果不是第一次，立即隱藏讀取動畫
+            setTimeout(function() {
+                document.getElementById('loadingOverlay').style.display = 'none';
+                sessionStorage.setItem('pageVisited', 'true');
+            }, 500); // 延遲 0.5 秒後隱藏
+            
+        }
+    };
+</script>
+
+<body>
+    <div class="bg-img"></div>
+    {% include "FunctionBar.html" %}
+
+    <div>
+        <div class="container-fluid">
+            <div class="carousel" id="mycarousel" data-bs-ride="carousel" data-bs-pause="false">
+                <div>
+                    <img src="{% static '/home/wood-fan.jpg' %}" class="carousel-img-bg">
+                    <ol class="carousel-indicators">
+                        <li data-bs-target="#mycarousel" data-bs-slide-to="0" class="active"></li>
+                        <li data-bs-target="#mycarousel" data-bs-slide-to="1"></li>
+                        <li data-bs-target="#mycarousel" data-bs-slide-to="2"></li>
+                    </ol>
+                    <div class="carousel-inner ">
+                        <div class="carousel-item active" data-bs-interval="4000">                                  <!--data-bs-interval 延遲時間換圖-->
+                            <img src="{% static '/home/j7.jpg' %}" class="d-block mx-auto carousel-img">         <!--d-block mx-auto 圖片水平居中-->
+
+                        </div>
+                        <div class="carousel-item" data-bs-interval="4000">
+                            <img src="{% static '/home/j19.jpg' %}" class="d-block mx-auto carousel-img">
+
+                        </div>
+                        <div class="carousel-item" data-bs-interval="4000"> 
+                            <img src="{% static '/home/j21.jpg' %}" class="d-block mx-auto carousel-img">
+        
+                        </div>
+                        <a class="carousel-control-prev" href="#mycarousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon"></span>
+                        </a>
+                        <a class="carousel-control-next" href="#mycarousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <img class="left1" src="{% static '/home/楓1.png' %}" alt="" >
+        </div>
+        
+        <a id="news-page" style="position: relative; top: -80;"></a>
+        <div >
+            <div class="container-fluid">
+                <div class="row news-row" id="news-row">
+                    <div class="col-lg-2 news-col-lg-2">
+                        <div class="news-title">
+                            <div class="news-text news-ch">
+                                最新活動
+                            </div>
+                            <div class="news-text news-jap">
+                                ニュース
+                            </div>
+                        </div>
+                        <div class="row d-none d-lg-block" >
+                            <div class="col d-flex justify-content-end">
+                                <div class="lantern-image">
+                                    <img src="{% static '/home/other/lantern2-1.png' %}">
+                                </div>
+                            </div>	
+                        </div>
+                    </div>
+
+                    <div class="col-lg-10 news-col-lg-10">
+                        <div class="slider-container">
+                            <!-- 左側的上一頁按鈕 -->
+                            <button class="slick-prev-custom"><</button>
+                            <div class="slider">
+                                <div class="news-img-item">
+                                    <div class="news-img-item-date">
+                                        Date：即日起
+                                    </div>
+                                    <a href="/home/news1/">
+                                        <img src="{% static '/home/news/五星.jpg' %}" alt="" />
+                                    </a>
+                                    <div class="news-img-item-title">
+                                        <a href="">
+                                            活動1：五星好評送好禮
+                                        </a>
+                                    </div> 
+
+                                </div>
+                                <div class="news-img-item">
+                                    <div class="news-img-item-date">
+                                        Date：2024-11-04
+                                    </div>
+                                    <a href="/home/news2/">
+                                    <img src="{% static '/home/news/海之日.jpg' %}" alt="" />
+                                    </a>
+                                    <div class="news-img-item-title">
+                                        <a href="./news-海之日.html">
+                                            活動2：海の日
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="news-img-item">
+                                    <div class="news-img-item-date">
+                                        Date：即日起
+                                    </div>
+                                    <a href="/home/news3/">
+                                        <img src="{% static '/home/news/會員禮.jpg' %}" alt="" />
+                                    </a>
+                                    <div class="news-img-item-title">
+                                        <a href="#">
+                                            活動3：加入會員送好禮
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="news-img-item">
+                                    <div class="news-img-item-date">
+                                        Date：2024-10-20
+                                    </div>
+                                    <a href="/home/news4/">
+                                        <img src="{% static '/home/news/鬼與魚共舞.jpg' %}" alt="" />
+                                    </a>
+                                    <div class="news-img-item-title">
+                                        <a href="#">
+                                            活動4：鬼與魚共舞
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 右側的下一頁按鈕 -->
+                            <button class="slick-next-custom">></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <img class="left2 " src="{% static '/home/楓2.png' %}" alt="">
+        </div>
+
+        <div>
+            <div class="container-fluid">
+                <div class="row us-row" id="us-row">
+                    <div class="col-lg-2 col-md-12 col-sm-12 order-lg-1 us-col">
+                        <div class="us-title">
+                            <div class="us-title-text us-ch">
+                                暮秋之魂
+                            </div>
+                            <div class="us-title-text us-jap">
+                                ムチュウたまし
+                            </div>
+                        </div>
+                        <div class="row d-none d-lg-block">
+                            <div class="col d-flex justify-content-end">
+                                <div class="lantern-image">
+                                    <img src="{% static '/home/other/lantern2-1.png' %}" class="Lantern-img img-fluid">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-10 col-md-12 col-sm-12 d-flex flex-column flex-md-row p-4 order-lg-0">
+                        <div class="col-lg-4  col-md-4 col-sm-12 mb-3">
+                            <div>
+                                <img src="{% static '/home/about_us/G3.jpg' %}" class="rounded img-fluid us-img1" id="us-img1">
+                            </div>
+                            <div class="test d-none d-md-block" >
+                                <img src="{% static '/home/about_us/i7.jpg' %}" class="rounded-3 img-fluid us-img2 " id="us-img2" style="z-index: 1010;">
+                            </div>
+                        </div>
+                        <div class="col-lg-8 col-md -8">
+                            <div class="position-relative">
+                                <div>
+                                    <div class="d-flex mb-5 mt-5">
+                                        <img src="{% static '/home/about_us/極鮮1.png' %}" class="img-fluid us-text-img">
+                                        <div class="ms-3 align-self-center us-text" >
+                                            是我們對食材新鮮度的極致追求，所有食材皆精選自當季與產地，確保每一口都能品嚐到自然的鮮美風味。
+                                        </div>
+                                    </div>
+                                    <div class="d-flex">
+                                        <img src="{% static '/home/about_us/恒心.png' %}" class="img-fluid us-text-img">
+                                        <div class="ms-3 align-self-center us-text" >
+                                            則是我們對烹飪技藝的不懈追求，從備料到烹調，每一道工皆以細心與專業完成，力求將每一道料理的完美，讓顧客能感受到我們的堅持與用心。
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <img class="left3" src="{% static '/home/楓1.png' %}" alt="">
+        </div>
+
+        <div>
+            <div class="container-fluid store">
+                <div class="row row-store">
+                    <div class="col-lg-9 col-store">
+                        <div class="row row-store2">
+                            <div class="col-8">
+                                <div class="store-title text-center">
+                                    <div class="store-text store-ch">本舖資訊</div>
+                                    <div class="store-text store-jap">じょうほう</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row store-inf py-4">
+                            <div class="col-xl-2"></div>
+                            <div class="col-lg-2 col-md-8 mb-4">
+                                <ul class="list-store-time">
+                                    <li><strong>營業時間：</strong></li>
+                                    <li class="mt-2">11:30 ~ 14:30</li>
+                                    <li class="mt-2">17:30 ~ 22:00</li>
+                                    <li class="mt-2">詳見各店營業時間</li>
+                                </ul>
+                            </div>
+                            <div class="col-lg-4 col-md-6">
+                                <ul class="list-store-positon">
+                                    <li><strong>本舖位置：</strong></li>
+                                    <li class="mt-2">320桃園市中壢區中華路一段636號</li>
+                                    <li class="mt-4">
+                                        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d805.5701447422197!2d121.2503653596317!3d24.969939930508332!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3468221cd95e97dd%3A0x79698a029cc303a9!2zMzIw5qGD5ZyS5biC5Lit5aOi5Y2A5Lit6I-v6Lev5LiA5q61NjM26Jmf!5e0!3m2!1szh-TW!2stw!4v1729665166601!5m2!1szh-TW!2stw" width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-lg-4 col-md-12">
+                                <ul class="list-store-tellus">
+                                    <li><strong>聯絡資訊：</strong></li>
+                                    <li class="mt-2">客服信箱：services@gmail.com</li>
+                                    <li class="mt-2">客服電話：0800-800-888</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 d-none d-lg-block store-img">
+                        <img src="{% static '/home/店鋪.jpg' %}" id="store_img">
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<div>
+    <footer class="footer">
+        <img src="{% static '/home/other/logo3.jpg' %}">
+        <p >© 2024 暮秋. 版權所有。</p>
+    </footer>
+</div>
+
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+<!-- news-slider輪播 -->
+<script>
+    $(document).ready(function () {
+        $('.slider').slick({
+            centerMode: true,               //開啟滑動項目居中模式
+            centerPadding: '50px',         //設定中心項目兩側的間距
+            slidesToShow: 3,                //設定同時顯示的滑動項目數量
+            autoplay:true,                  //開啟自動播放功能
+            autoplaySpeed:2000,             //設定自動播放的速度
+            variableWidth:true,
+            arrows:false,
+            responsive: [                   //這是一個響應式設置，根據不同的螢幕寬度調整輪播的外觀和行為
+                {
+                breakpoint: 768,            //當螢幕寬度小於或等於 768px 時
+                settings: {
+                    arrows: false,            //隱藏左右切換的箭頭按鈕
+                    centerMode: true,        //保留中心模式
+                    centerPadding: '40px',   //將中心兩側的間距縮小為 40px。
+                    slidesToShow: 1          //同時顯示 3 個滑動項目。
+                }
+                },
+                {
+                breakpoint: 480,
+                settings: {
+                    arrows: false,
+                    centerMode: true,
+                    centerPadding: '40px',
+                    slidesToShow: 1
+                }
+                }
+            ]
+        })
+        $('.slick-prev-custom').click(function () {
+            $('.slider').slick('slickPrev');
+        });
+
+        $('.slick-next-custom').click(function () {
+            $('.slider').slick('slickNext');
+        });
+    });
+</script>
+
+<!-- 動畫當畫面進入，執行區塊左右進入 -->
+<script>
+    // 建立 Intersection Observer
+    const observer_data = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // 當元素進入視窗時，添加 fade-in-right class 來執行動畫
+          entry.target.classList.add('fade-in-right');
+        }
+      });
+    }, {
+      threshold: 0.1 // 當 10% 的區域進入視窗時觸發
+    });
+        // 建立 Intersection Observer
+    const observer_data2 = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // 當元素進入視窗時，添加 fade-in-left class 來執行動畫
+          entry.target.classList.add('fade-in-left');
+        }
+      });
+    }, {
+      threshold: 0.1 // 當 10% 的區域進入視窗時觸發
+    });
+
+    const observer_img1 = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // 當元素進入視窗時，添加 fade-in-right class 來執行動畫
+          entry.target.classList.add('fade-in-image1');
+        }
+      });
+    }, {
+      threshold: 0.1 // 當 10% 的區域進入視窗時觸發
+    });
+
+    const observer_img2 = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // 當元素進入視窗時，添加 fade-in-right class 來執行動畫
+          entry.target.classList.add('fade-in-image2');
+        }
+      });
+    }, {
+      threshold: 0.1 // 當 10% 的區域進入視窗時觸發
+    });
+
+    const observer_img3 = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // 當元素進入視窗時，添加 fade-in-right class 來執行動畫
+          entry.target.classList.add('fade-in-image3');
+        }
+      });
+    }, {
+      threshold: 0.1 // 當 10% 的區域進入視窗時觸發
+    });
+    
+    
+    // 監測特定區域是否進入螢幕
+    const fadeInSection_data = document.getElementById('news-row');
+    const fadeInSection_data2 = document.getElementById('us-row');
+    observer_data.observe(fadeInSection_data);
+    observer_data2.observe(fadeInSection_data2);
+
+    //圖的部分
+    const fadeInSection_img1 = document.getElementById('us-img1');
+    observer_img2.observe(fadeInSection_img1);
+    const fadeInSection_img2 = document.getElementById('us-img2');
+    observer_img2.observe(fadeInSection_img2);
+    const fadeInSection_img3 = document.getElementById('store_img');
+    observer_img2.observe(fadeInSection_img3);
+
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
