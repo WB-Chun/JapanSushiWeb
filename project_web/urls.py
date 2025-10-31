@@ -23,6 +23,7 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
     path('admin/', admin.site.urls),
 
+    path('', views.home),
     path('home/', views.home),
 	path('home/news1/', views.news1),
 	path('home/news2/', views.news2),
