@@ -149,3 +149,13 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = "testforjayuse@gmail.com"  # 你的電子郵件
 EMAIL_HOST_PASSWORD = "sdla bwnm gsqy dxxe"     # 你的電子郵件密碼 (應用程式密碼)
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
+# 1) 允許這個來源送 CSRF cookie（Django 4+ 一定要含協定 https://）
+CSRF_TRUSTED_ORIGINS = [
+    "https://japansushiweb.onrender.com",
+    "https://*.onrender.com",   # 建議順手加 wildcard
+]
+
+# 2) 透過反向代理後，告訴 Django 這是 HTTPS，避免 Cookie/CSRF 判斷錯誤
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
